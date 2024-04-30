@@ -1,0 +1,30 @@
+.SideBar {
+    background-color: var(--purple-100);
+    padding: 24px;
+    height: 100vh;
+    margin: 0;
+
+    a {
+        all: unset;
+    }
+}
+
+.root {
+    &[data-variant='subtle'] {
+        &:hover {
+            background: none;
+            span {
+                color: var(--purple-500-main);
+            }
+        }
+
+        span {
+            color: var(--black);
+        }
+    };
+    
+    &[data-variant='active'] {
+        background: var(--purple-200);
+        color: var(--purple-500-main);
+    }
+}
