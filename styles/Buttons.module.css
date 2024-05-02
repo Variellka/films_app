@@ -1,0 +1,6 @@
+.root {
+    &[data-variant='filled'] {
+        background: var(--purple-500-main);
+        color: var(--white);
+    }
+}

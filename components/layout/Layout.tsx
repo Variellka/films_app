@@ -1,13 +1,27 @@
-import { Flex } from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import { FC, PropsWithChildren } from "react";
-import Sidebar from "./sidebar/Sidebar";
+import Navbar from "./navbar/Navbar";
 
-const Layout:FC<PropsWithChildren> = ({children}) => {
+const Layout:FC<PropsWithChildren> = ({children}) => {    
     return (
-        <Flex>
-           <Sidebar />
-            <main>{children}</main>
-         </Flex>
+        <AppShell
+            navbar={{
+                width: 280,
+                breakpoint: 'sm',
+            }}
+            
+            withBorder={false}
+            padding="40"
+        >
+            <AppShell.Navbar p={24}>
+                <Navbar />
+            </AppShell.Navbar>
+            <AppShell.Main>
+                <div style={{padding: '0 50px'}}>
+                    {children}
+                </div>
+            </AppShell.Main>
+         </AppShell>
     );
 };
 

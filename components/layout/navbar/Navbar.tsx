@@ -1,7 +1,7 @@
-import { Button, MantineProvider, Stack, createTheme } from "@mantine/core";
+import { AppShell, Button, MantineProvider, Text, createTheme } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from './SideBar.module.css';
+import styles from './Navbar.module.css';
 
 const links = {
     MOVIES: '/movies',
@@ -12,23 +12,23 @@ const theme = createTheme({
     components: {
       Button: Button.extend({
         classNames: styles,
-      }),
+      })
     },
   });
 
-const Sidebar = () => {
+const Navbar = () => {
     const {pathname} = useRouter();
 
     return (
         <MantineProvider theme={theme}>
-            <Stack className={styles.SideBar} justify="flex-start" gap="0">
+            <AppShell.Navbar p="md" className={styles.Navbar}>
                 <Link href={links.MOVIES}>
                     <Button 
                         variant={pathname === links.MOVIES ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
                     >
-                        Movies
+                        <Text size="md">Movies</Text>
                     </Button>
                 </Link>
                 <Link href={links.RATED_MOVIES}>
@@ -37,12 +37,12 @@ const Sidebar = () => {
                         fullWidth 
                         justify="start"
                     >
-                        Rated Movies
+                        <Text size="md">Rated Movies</Text>
                     </Button>
                 </Link>
-            </Stack>
+            </AppShell.Navbar>
         </MantineProvider>
     )
 };
 
-export default Sidebar;
+export default Navbar;

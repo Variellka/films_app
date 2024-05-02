@@ -18,16 +18,6 @@
     --purple-100: #F2EBF9;
 
     --yellow: #FAB005;
-
-    /* text styles: */
-    --title-l: 28px bold auto;
-    --title-s-bold: 20px bold / 20%;
-    --title-s: 20px 600 auto;
-
-    --text-base-m: 16px normal / 140%;
-    --text-base-m-bold: 16px bold / 140%;
-    --text-base-s: 16px / 20%;
-    --text-base-s-bold: 16px 600 / 140%;
   }
 
 body {
