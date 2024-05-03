@@ -3,10 +3,13 @@ import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "../theme";
 import './../styles/global.css'
+import { Provider } from "react-redux";
+import { store } from "../app/store";
 
 export default function App({ Component, pageProps }: any) {
   return (
-    <MantineProvider theme={theme}>
+    <Provider store={store}>
+      <MantineProvider theme={theme}>
       <Head>
         <title>films app</title>
         <meta
@@ -17,5 +20,6 @@ export default function App({ Component, pageProps }: any) {
       </Head>
       <Component {...pageProps} />
     </MantineProvider>
+    </Provider>
   );
 }
