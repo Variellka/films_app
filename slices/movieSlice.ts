@@ -9,7 +9,8 @@ const initialState = {
   genre: undefined,
   releaseYear: undefined,
   sortBy: undefined,
-  rating: undefined
+  rating: undefined,
+  totalPagesNum: undefined
 }
 
 export const movieSlice = createSlice({
@@ -40,7 +41,8 @@ export const movieSlice = createSlice({
         })
         .addCase(fetchMovies.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.data = action.payload
+            state.data = action.payload.results;
+            state.totalPagesNum = action.payload.total_pages
         })
         .addCase(fetchMovies.rejected, (state, action) => {
           // @ts-ignore

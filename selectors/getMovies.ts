@@ -6,3 +6,4 @@ export const getMoviesGenre = (state) => state.movies?.genre || undefined;
 export const getMoviesReleaseYear = (state) => state.movies?.releaseYear  || undefined;
 export const getMoviesSortBy = (state) => state.movies?.sortBy  || undefined;
 export const getMoviesRating = (state) => state.movies?.rating || undefined;
+export const getMoviesTotalPages = (state) => state.movies?.totalPagesNum || undefined;
