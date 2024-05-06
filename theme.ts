@@ -1,5 +1,5 @@
 import { Button, createTheme } from "@mantine/core";
-import styles from './styles/Buttons.module.css'
+import styles from './styles/Global.module.css'
 
 export const theme = createTheme({
   components: {
