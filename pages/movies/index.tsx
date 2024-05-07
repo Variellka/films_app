@@ -7,13 +7,15 @@ import MoviesList from "../../components/ui/MoviesList/MoviesList";
 import { fetchMovies } from "../../services/fetchMovies";
 import MovieFilters from "../../components/ui/MovieFilters/MovieFilters";
 import { fetchGenres } from "../../services/fetchGenres";
-import { getMoviesPageNum, getMoviesTotalPages } from "../../selectors/getMovies";
+import { getMoviesData, getMoviesPageNum, getMoviesTotalPages } from "../../selectors/getMovies";
 import { movieSliceActions } from "../../slices/movieSlice";
+import MovieSort from "../../components/ui/MovieSort/MovieSort";
 
 const MoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const page = useSelector(getMoviesPageNum)
     const totalPages = useSelector(getMoviesTotalPages)
+    const moviesLength = useSelector(getMoviesData).length
 
     useEffect(() => {
       dispatch(fetchMovies());
@@ -27,10 +29,11 @@ const MoviesPage = () => {
 
     return (
         <Layout>
-            <Title order={1}>Movies</Title>
+            <Title order={1} mb='40'>Movies</Title>
             <MovieFilters />
+            <MovieSort />
             <MoviesList/>
-            <Pagination total={totalPages} onChange={setPage} value={page}/>
+            {moviesLength ? <Pagination total={totalPages} onChange={setPage} value={page}/> : null}
         </Layout>
     );
 };

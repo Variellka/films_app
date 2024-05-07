@@ -8,8 +8,12 @@ const initialState = {
   page: 1,
   genre: undefined,
   releaseYear: undefined,
-  sortBy: undefined,
-  rating: undefined,
+  sortBy: {
+    name: 'Most popular',
+    value: 'popularity.desc'
+  },
+  ratingLowest: undefined,
+  ratingHighest: undefined,
   totalPagesNum: undefined
 }
 
@@ -27,11 +31,21 @@ export const movieSlice = createSlice({
       state.releaseYear = action.payload;
     },
     setSort: (state, action) => {
-      state.page = action.payload;
+      state.sortBy = action.payload;
     },
-    setRating: (state, action) => {
-      state.page = action.payload;
+    setRatingLowest: (state, action) => {
+      state.ratingLowest = action.payload;
     },
+    setRatingHighest: (state, action) => {
+      state.ratingHighest = action.payload;
+    },
+    resetFilters:  (state) => {
+      state.page = 1;
+      state.genre = undefined;
+      state.releaseYear = undefined;
+      state.ratingLowest = undefined;
+      state.ratingHighest = undefined;
+    }
   },
   extraReducers: (builder) => {
     builder

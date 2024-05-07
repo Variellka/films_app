@@ -12,7 +12,9 @@ const MovieCardPreview = ({movie}) => {
         <Flex gap={16}>
             <Image 
                 alt={movie.original_title} 
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} 
+                src={movie.poster_path ? 
+                    `https://image.tmdb.org/t/p/w500/${movie.poster_path}` 
+                    : '/noPoster.png'} 
                 h={170}
                 w={119}
             />
