@@ -9,26 +9,31 @@ const MovieCardPreview = ({movie}) => {
     : null;
 
     return (
-        <Flex gap={16}>
-            <Image 
-                alt={movie.original_title} 
-                src={movie.poster_path ? 
-                    `https://image.tmdb.org/t/p/w500/${movie.poster_path}` 
-                    : '/noPoster.png'} 
-                h={170}
-                w={119}
-            />
-            <Stack align="stretch" justify="space-between">
-                <Stack gap='xs'>
-                    <Text size="xl" fw={500}>{movie.original_title}</Text>
-                    <Text size="md">{movie.release_date.split('-')[0]}</Text>
-                    <Text size="md" fw={600}>
-                        {movie.vote_average.toFixed(1)}
-                        <Text span fw={400}>{` (${movie.vote_count})`}</Text>
-                    </Text>
+        <Flex justify='space-between'>
+            <Flex gap={16}>
+                <Image 
+                    alt={movie.original_title} 
+                    src={movie.poster_path ? 
+                        `https://image.tmdb.org/t/p/w500/${movie.poster_path}` 
+                        : '/noPoster.png'} 
+                    h={170}
+                    w={119}
+                />
+                <Stack align="stretch" justify="space-between">
+                    <Stack gap='xs'>
+                        <Text size="xl" fw={500}>{movie.original_title}</Text>
+                        <Text size="md">{movie.release_date.split('-')[0]}</Text>
+                        <Flex>
+                            <Image src='/Star.svg' alt="rating" w={28} h={28} mr={4}/>
+                            <Text size="md" fw={600}>{movie.vote_average.toFixed(1)}
+                                <Text span fw={400}>{` (${movie.vote_count})`}</Text>
+                            </Text>
+                        </Flex>
+                    </Stack>
+                    <Text><Text span>Genres</Text>{genresDecoded}</Text>
                 </Stack>
-                <Text><Text span>Genres </Text>{genresDecoded}</Text>
-            </Stack>
+            </Flex>
+            <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
         </Flex>
     );
 };

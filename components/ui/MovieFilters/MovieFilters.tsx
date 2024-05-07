@@ -71,26 +71,28 @@ const MovieFilters = () => {
                 searchable
                 key={releaseDate}
             />
-            <Select
-                label="Ratings"
-                placeholder="From"
-                data={Array.from({ length: 10 }, (_, i) => i+1).map(String)}
-                onChange={setRatingLowest}
-                value={ratingLowest}
-                key={ratingLowest}
-            />
-            <Flex align="flex-end">
+            <Flex gap={8}>
                 <Select
-                    label=""
-                    placeholder="To"
+                    label="Ratings"
+                    placeholder="From"
                     data={Array.from({ length: 10 }, (_, i) => i+1).map(String)}
-                    onChange={setRatingHighest}
-                    value={ratingHighest}
-                    key={ratingHighest}
+                    onChange={setRatingLowest}
+                    value={ratingLowest}
+                    key={ratingLowest}
                 />
-                <Button variant="white" color="gray" onClick={resetFilters}>
-                    Reset filters
-                </Button>
+                <Flex align="flex-end">
+                    <Select
+                        label=""
+                        placeholder="To"
+                        data={Array.from({ length: 10 }, (_, i) => i+1).map(String)}
+                        onChange={setRatingHighest}
+                        value={ratingHighest}
+                        key={ratingHighest}
+                    />
+                    <Button variant="white" color="gray" onClick={resetFilters}>
+                        Reset filters
+                    </Button>
+                </Flex>
             </Flex>
         </Flex>
     );
