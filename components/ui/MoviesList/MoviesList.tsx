@@ -1,10 +1,12 @@
-import { Flex, Grid, Image, Stack, Text } from "@mantine/core";
-import MovieCardPreview from "../MovieCardPreview/MovieCardPreview";
+import { Grid, Image, Stack, Text } from "@mantine/core";
 import { useSelector } from "react-redux";
-import { getMoviesData } from "../../../selectors/getMovies";
+import { getMoviesData, getMoviesIsLoading } from "../../../selectors/getMovies";
+import Loader from "../Loader/Loader";
+import MovieCardPreview from "../MovieCardPreview/MovieCardPreview";
 
 const MoviesList = () => {
     const movies = useSelector(getMoviesData)
+    const isLoading = useSelector(getMoviesIsLoading)
 
     if (movies && movies.length) {
         return (
@@ -15,6 +17,12 @@ const MoviesList = () => {
                     </Grid.Col>
                 ))}
             </Grid>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <Loader isLoading={isLoading}/>
         )
     }
 

@@ -3,7 +3,7 @@ import { fetchMovies } from '../services/fetchMovies';
 
 const initialState = {
   data: [],
-  isLoading: false,
+  isLoading: true,
   error: undefined,
   page: 1,
   genre: undefined,
