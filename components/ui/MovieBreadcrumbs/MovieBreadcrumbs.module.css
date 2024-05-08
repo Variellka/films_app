@@ -1,0 +1,5 @@
+.MovieBreadcrumbs {
+    a {
+        color: var(--purple-500-main);
+    }
+}

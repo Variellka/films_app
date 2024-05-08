@@ -21,7 +21,6 @@ export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, thun
         const ratingHighest = getMoviesRatingHighest(getState());
 
         try {
-          console.log(sortBy)
             const response = await axios.get(url, {...options, params: {
                 language: 'en-US',
                 with_genres: genre?.id,

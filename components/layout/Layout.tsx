@@ -11,13 +11,12 @@ const Layout:FC<PropsWithChildren> = ({children}) => {
             }}
             
             withBorder={false}
-            padding="40"
         >
             <AppShell.Navbar p={24}>
                 <Navbar />
             </AppShell.Navbar>
             <AppShell.Main>
-                <div style={{padding: '0 50px'}}>
+                <div style={{padding: '40px 90px'}}>
                     {children}
                 </div>
             </AppShell.Main>

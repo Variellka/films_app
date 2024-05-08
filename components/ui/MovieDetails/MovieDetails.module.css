@@ -1,8 +1,9 @@
 .MovieTitle {
     color: var(--purple-500-main);
-    text-decoration: none;  
 }
 
-.MovieDate, .MovieGenre, .MovieVote {
+.subtitle {
     color: var(--grey-600);
+    display: inline-block;
+    width: 140px !important;
 }
