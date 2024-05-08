@@ -9,7 +9,6 @@ const Layout:FC<PropsWithChildren> = ({children}) => {
                 width: 280,
                 breakpoint: 'sm',
             }}
-            
             withBorder={false}
         >
             <AppShell.Navbar p={24}>

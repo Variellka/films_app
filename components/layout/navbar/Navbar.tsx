@@ -1,4 +1,4 @@
-import { AppShell, Button, MantineProvider, Text, createTheme } from "@mantine/core";
+import { AppShell, Button, Image, MantineProvider, Text, createTheme } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from './Navbar.module.css';
@@ -21,7 +21,8 @@ const Navbar = () => {
 
     return (
         <MantineProvider theme={theme}>
-            <AppShell.Navbar p="md" className={styles.Navbar}>
+            <AppShell.Navbar p={24} className={styles.Navbar}>
+                <Image src='./Logo.svg' alt="logo" h={36} w={135} mb={80}/>
                 <Link href={links.MOVIES}>
                     <Button 
                         variant={pathname === links.MOVIES ? 'active' : 'subtle'} 
