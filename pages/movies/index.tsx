@@ -10,6 +10,7 @@ import { getMoviesData, getMoviesPageNum, getMoviesTotalPages } from "../../sele
 import { fetchGenres } from "../../services/fetchGenres";
 import { fetchMovies } from "../../services/fetchMovies";
 import { movieSliceActions } from "../../slices/movieSlice";
+import MoviePagination from "../../components/ui/MoviePagination/MoviePagination";
 
 const MoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -33,16 +34,13 @@ const MoviesPage = () => {
             <MovieFilters />
             <MovieSort />
             <MoviesList/>
-            {moviesLength &&  totalPages !== 1 ? 
-            <Group justify="end" gap={24}>
-              <Pagination 
-                total={totalPages >= 500 ? 500 : totalPages} 
-                onChange={setPage} 
-                value={page}
-                mt={24}
-                color="grape"
+            {moviesLength &&  totalPages !== 1 ?
+              <MoviePagination 
+                totalPages={totalPages} 
+                setPage={setPage} 
+                page={page} 
+                justify={'end'}
               /> 
-            </Group>
             : null}
         </Layout>
     );
