@@ -1,11 +1,11 @@
-import { Button, Flex, Select, Text } from "@mantine/core";
+import { Button, Flex, Select } from "@mantine/core";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../app_/store";
 import { getGenresData } from "../../../selectors/getGenres";
 import { getMoviesGenre, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear } from "../../../selectors/getMovies";
-import { useCallback } from "react";
-import { AppDispatch } from "../../../app/store";
-import { movieSliceActions } from "../../../slices/movieSlice";
 import { fetchMovies } from "../../../services/fetchMovies";
+import { movieSliceActions } from "../../../slices/movieSlice";
 
 const getYears = (startYear, endYear, fn = i => i) => {
     const length = endYear - startYear + 1;

@@ -1,16 +1,16 @@
-import { Group, Pagination, Title } from "@mantine/core";
+import { Title } from "@mantine/core";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch } from "../../app_/store";
 import Layout from "../../components/layout/Layout";
 import MovieFilters from "../../components/ui/MovieFilters/MovieFilters";
+import MoviePagination from "../../components/ui/MoviePagination/MoviePagination";
 import MovieSort from "../../components/ui/MovieSort/MovieSort";
 import MoviesList from "../../components/ui/MoviesList/MoviesList";
 import { getMoviesData, getMoviesPageNum, getMoviesTotalPages } from "../../selectors/getMovies";
 import { fetchGenres } from "../../services/fetchGenres";
 import { fetchMovies } from "../../services/fetchMovies";
 import { movieSliceActions } from "../../slices/movieSlice";
-import MoviePagination from "../../components/ui/MoviePagination/MoviePagination";
 
 const MoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>();

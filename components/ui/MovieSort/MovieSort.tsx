@@ -2,7 +2,7 @@ import { Flex, Select } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoviesSortBy } from "../../../selectors/getMovies";
 import { useCallback } from "react";
-import { AppDispatch } from "../../../app/store";
+import { AppDispatch } from "../../../app_/store";
 import { movieSliceActions } from "../../../slices/movieSlice";
 import { fetchMovies } from "../../../services/fetchMovies";
 

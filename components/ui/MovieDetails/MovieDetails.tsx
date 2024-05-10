@@ -10,11 +10,14 @@ const MovieDetails = () => {
     const movie = useSelector(getMovieDetailsData)
     const isLoading = useSelector(getMovieDetailsIsLoading)
 
-
     const movieBreadcrumbsItems = [
         { title: 'Movies', href: '/movies' },
         { title: movie?.original_title},
     ]
+
+    if (movie && typeof movie === 'string') {
+        return null
+    }
 
     if (isLoading) {
         return (
@@ -28,9 +31,9 @@ const MovieDetails = () => {
             <Flex justify='space-between' key='movieDetails' p={24}>
             <Flex gap={16}>
                 <Image 
-                    alt={movie?.original_title} 
-                    src={movie?.poster_path ? 
-                        `https://image.tmdb.org/t/p/w500/${movie?.poster_path}` 
+                    alt={movie.original_title} 
+                    src={movie.poster_path ? 
+                        `https://image.tmdb.org/t/p/w500/${movie.poster_path}` 
                         : '/noPoster.png'} 
                     h={352}
                     w={250}
@@ -44,10 +47,12 @@ const MovieDetails = () => {
                         >
                             {movie?.original_title}
                         </Text>
-                        <Text size="md" className={styles.subtitle}>{movie?.release_date.split('-')[0]}</Text>
+                        <Text size="md" className={styles.subtitle}>
+                            {movie?.release_date?.split('-')[0]}
+                        </Text>
                         <Flex>
                             <Image src='/Star.svg' alt="rating" w={28} h={28} mr={4}/>
-                            <Text size="md" fw={600}>{movie?.vote_average.toFixed(1)}
+                            <Text size="md" fw={600}>{movie?.vote_average?.toFixed(1)}
                                 <Text span fw={400} className={styles.subtitle}>
                                     &nbsp;{`(${movie?.vote_count})`}
                                 </Text>
@@ -57,23 +62,23 @@ const MovieDetails = () => {
                     <Stack gap={13}>
                         <Text>
                             <Text span mr={8} w={140} className={styles.subtitle}>Duration </Text>
-                            {formatTime(movie.runtime)}
+                            {formatTime(movie?.runtime)}
                         </Text>
                         <Text>
                             <Text span mr={8} w={140} className={styles.subtitle}>Premiere </Text>
-                            {formatDate(movie.release_date)}
+                            {formatDate(movie?.release_date)}
                         </Text>
                         <Text>
                             <Text span mr={8} w={140} className={styles.subtitle}>Budget </Text>
-                            {formatCurrency(movie.budget)}
+                            {formatCurrency(movie?.budget)}
                         </Text>
                         <Text>
                             <Text span mr={8} w={140} className={styles.subtitle}>Gross worldwide </Text>
-                            {formatCurrency(movie.revenue)}
+                            {formatCurrency(movie?.revenue)}
                         </Text>
                         <Text>
                             <Text span mr={8} w={140} className={styles.subtitle}>Genres </Text>
-                            {movie.genres.map(genre => genre.name).join(', ')}
+                            {movie?.genres?.map(genre => genre.name).join(', ')}
                         </Text>
                     </Stack>
                 </Stack>
@@ -94,14 +99,14 @@ const MovieDetails = () => {
             </>
             : null}
             
-            {movie.overview ?  
+            {movie?.overview ?  
                 <>
                     <Text size="xl" fw={700} mb={16}>Description</Text>
                     <Text mb={41}>{movie.overview}</Text>
                 </>
              : null}
 
-            {movie.production_companies && movie.production_companies.length ? 
+            {movie?.production_companies && movie?.production_companies?.length ? 
                 <>
                 <Text size="xl" fw={700} mb={16}>Production</Text>
                 <Stack>

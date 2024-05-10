@@ -1,5 +1,7 @@
 export const formatTime = (number) => {
-    return Math.floor(number / 60) + 'h ' + number % 60 + 'm';
+    if (number) {
+        return Math.floor(number / 60) + 'h ' + number % 60 + 'm';
+    }
 }
 
 export const formatDate = (dateString) => {

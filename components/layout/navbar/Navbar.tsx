@@ -2,11 +2,7 @@ import { AppShell, Button, Image, MantineProvider, Text, createTheme } from "@ma
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from './Navbar.module.css';
-
-const links = {
-    MOVIES: '/movies',
-    RATED_MOVIES: '/rated-movies'
-}
+import { routes } from "../../../app_/routes";
 
 const theme = createTheme({
     components: {
@@ -23,18 +19,18 @@ const Navbar = () => {
         <MantineProvider theme={theme}>
             <AppShell.Navbar p={24} className={styles.Navbar}>
                 <Image src='./Logo.svg' alt="logo" h={36} w={135} mb={80}/>
-                <Link href={links.MOVIES}>
+                <Link href={routes.MOVIES}>
                     <Button 
-                        variant={pathname === links.MOVIES ? 'active' : 'subtle'} 
+                        variant={pathname.includes(routes.MOVIES) ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
                     >
                         <Text size="md">Movies</Text>
                     </Button>
                 </Link>
-                <Link href={links.RATED_MOVIES}>
+                <Link href={routes.RATED_MOVIES}>
                     <Button 
-                        variant={pathname === links.RATED_MOVIES ? 'active' : 'subtle'} 
+                        variant={pathname === routes.RATED_MOVIES ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
                     >
