@@ -2,11 +2,11 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../app/store";
-import { fetchMovieDetails } from "../../services/fetchMovieDetails";
-import { movieDetailsSliceActions } from "../../slices/movieDetailsSlice";
+import { AppDispatch } from "../../app_/store";
 import Layout from "../../components/layout/Layout";
 import MovieDetails from "../../components/ui/MovieDetails/MovieDetails";
+import { fetchMovieDetails } from "../../services/fetchMovieDetails";
+import { movieDetailsSliceActions } from "../../slices/movieDetailsSlice";
 
 const MovieDetailsPage: NextPage = () => {
     const {query} = useRouter();
@@ -21,11 +21,11 @@ const MovieDetailsPage: NextPage = () => {
             dispatch(movieDetailsSliceActions.resetData())
         }
     }, [dispatch, query.id])
-    
+
     return (
         <Layout>
             <MovieDetails />
-        </Layout>
+        </Layout> 
     );
 };
 

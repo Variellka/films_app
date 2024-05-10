@@ -29,7 +29,7 @@ async (_, thunkApi) => {
 
               return response.data;
           } catch (e) {
-              return 'error' + e
+              throw new Error();
           }
         }
 })

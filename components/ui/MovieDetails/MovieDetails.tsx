@@ -1,28 +1,29 @@
+import { AspectRatio, Flex, Image, Stack, Text } from "@mantine/core";
 import { useSelector } from "react-redux";
-import { getMovieDetailsData, getMovieDetailsIsLoading } from "../../../selectors/getMovieDetails";
-import { Flex, Stack, Image, Text, AspectRatio } from "@mantine/core";
+import { getMovieDetailsData, getMovieDetailsError, getMovieDetailsIsLoading } from "../../../selectors/getMovieDetails";
+import { formatCurrency, formatDate, formatTime, formatVote } from "../../../utils/formatFunctions";
 import Loader from "../Loader/Loader";
-import styles from './MovieDetails.module.css'
 import MovieBreadcrumbs from "../MovieBreadcrumbs/MovieBreadcrumbs";
-import { formatTime, formatDate, formatCurrency } from "../../../utils/formatFunctions";
+import styles from './MovieDetails.module.css';
 
 const MovieDetails = () => {
     const movie = useSelector(getMovieDetailsData)
     const isLoading = useSelector(getMovieDetailsIsLoading)
+    const error = useSelector(getMovieDetailsError)
 
     const movieBreadcrumbsItems = [
         { title: 'Movies', href: '/movies' },
         { title: movie?.original_title},
     ]
 
-    if (movie && typeof movie === 'string') {
-        return null
-    }
-
     if (isLoading) {
         return (
             <Loader isLoading={isLoading} key='loading'/>
         )
+    }
+
+    if (error) {
+        return null
     }
 
     return (
@@ -54,7 +55,7 @@ const MovieDetails = () => {
                             <Image src='/Star.svg' alt="rating" w={28} h={28} mr={4}/>
                             <Text size="md" fw={600}>{movie?.vote_average?.toFixed(1)}
                                 <Text span fw={400} className={styles.subtitle}>
-                                    &nbsp;{`(${movie?.vote_count})`}
+                                    &nbsp;{`(${formatVote(movie?.vote_count)})`}
                                 </Text>
                             </Text>
                         </Flex>

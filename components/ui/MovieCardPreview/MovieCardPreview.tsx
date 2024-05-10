@@ -4,6 +4,7 @@ import { getGenresData } from "../../../selectors/getGenres";
 import styles from './MovieCardPreview.module.css'
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { formatVote } from "../../../utils/formatFunctions";
 
 const MovieCardPreview = ({movie}) => {
     const {pathname} = useRouter();
@@ -39,7 +40,7 @@ const MovieCardPreview = ({movie}) => {
                         <Flex>
                             <Image src='/Star.svg' alt="rating" w={28} h={28} mr={4}/>
                             <Text size="md" fw={600}>{movie?.vote_average.toFixed(1)}
-                                <Text span fw={400} className={styles.MovieVote}>{` (${movie?.vote_count})`}</Text>
+                                <Text span fw={400} className={styles.MovieVote}>{` (${formatVote(movie?.vote_count)})`}</Text>
                             </Text>
                         </Flex>
                     </Stack>

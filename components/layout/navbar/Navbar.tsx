@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <MantineProvider theme={theme}>
             <AppShell.Navbar p={24} className={styles.Navbar}>
-                <Image src='./Logo.svg' alt="logo" h={36} w={135} mb={80}/>
+                <Image src={"/" + './Logo.svg'} alt="logo" h={36} w={179} fit="contain" mb={80}/>
                 <Link href={routes.MOVIES}>
                     <Button 
                         variant={pathname.includes(routes.MOVIES) ? 'active' : 'subtle'} 

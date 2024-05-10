@@ -30,8 +30,8 @@ export const movieDetailsSlice = createSlice({
             state.data = action.payload;
         })
         .addCase(fetchMovieDetails.rejected, (state, action) => {
-          // @ts-ignore
-            state.error = action.payload;
+          //@ts-ignore
+            state.error = action.error;
             state.isLoading = false;
         });
 },
