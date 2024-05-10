@@ -28,4 +28,6 @@ export const formatVote = (num) => {
         }
         return num.toString();
     }
+    
+    return '0'
 }

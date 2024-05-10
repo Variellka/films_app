@@ -1,10 +1,10 @@
-import { Flex, Image, Stack, Text } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { getGenresData } from "../../../selectors/getGenres";
-import styles from './MovieCardPreview.module.css'
+import { Button, Flex, Image, Stack, Text } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { getGenresData } from "../../../selectors/getGenres";
 import { formatVote } from "../../../utils/formatFunctions";
+import styles from './MovieCardPreview.module.css';
 
 const MovieCardPreview = ({movie}) => {
     const {pathname} = useRouter();
@@ -50,7 +50,9 @@ const MovieCardPreview = ({movie}) => {
                     </Text>
                 </Stack>
             </Flex>
-            <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
+            <Button variant="transparent">
+                <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
+            </Button>
         </Flex>
     );
 };
