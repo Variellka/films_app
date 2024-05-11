@@ -1,10 +1,12 @@
-import { Button, Flex, Image, Stack, Text } from "@mantine/core";
+import { Button, Flex, Image, Paper, Stack, Text } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { getGenresData } from "../../../selectors/getGenres";
 import { formatVote } from "../../../utils/formatFunctions";
 import styles from './MovieCardPreview.module.css';
+import RateMovieModal from "../RateMovieModal/RateMovieModal";
+import { useState } from "react";
 
 const MovieCardPreview = ({movie}) => {
     const {pathname} = useRouter();
@@ -13,8 +15,10 @@ const MovieCardPreview = ({movie}) => {
     ? movie.genre_ids.map(id => genres.find(obj => obj.id === id)?.name).join(', ') 
     : null;
 
+    const [open, setOpen] = useState(false)
+
     return (
-        <Flex justify='space-between'>
+        <Flex justify='space-between' p={24} bg="white" style={{ borderRadius: '10px' }}>
             <Flex gap={16}>
                 <Image 
                     alt={movie?.original_title} 
@@ -50,9 +54,10 @@ const MovieCardPreview = ({movie}) => {
                     </Text>
                 </Stack>
             </Flex>
-            <Button variant="transparent">
+            <Button variant="transparent" onClick={() => setOpen(true)} p={0} ml={10}>
                 <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
             </Button>
+            <RateMovieModal opened={open} close={() => {setOpen(false)}} movie={movie}/>
         </Flex>
     );
 };

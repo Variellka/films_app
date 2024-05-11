@@ -3,4 +3,8 @@
         background: var(--purple-500-main);
         color: var(--white);
     }
+
+    &[data-variant='transparent'] {
+        color: var(--purple-500-main);
+    }
 }

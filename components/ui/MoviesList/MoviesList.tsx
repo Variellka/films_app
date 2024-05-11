@@ -12,7 +12,7 @@ const MoviesList = () => {
         return (
             <Grid >
                 {movies.map(movie => (
-                    <Grid.Col key={movie.id} span={6} p='24'>
+                    <Grid.Col key={movie.id} span={6}>
                         <MovieCardPreview movie={movie}/>
                     </Grid.Col>
                 ))}
