@@ -1,15 +1,24 @@
-import { AspectRatio, Flex, Image, Stack, Text } from "@mantine/core";
-import { useSelector } from "react-redux";
+import { AspectRatio, Button, Flex, Image, Stack, Text } from "@mantine/core";
+import { useDispatch, useSelector } from "react-redux";
 import { getMovieDetailsData, getMovieDetailsError, getMovieDetailsIsLoading } from "../../../selectors/getMovieDetails";
 import { formatCurrency, formatDate, formatTime, formatVote } from "../../../utils/formatFunctions";
 import Loader from "../Loader/Loader";
 import MovieBreadcrumbs from "../MovieBreadcrumbs/MovieBreadcrumbs";
 import styles from './MovieDetails.module.css';
+import { useCallback } from "react";
+import { rateModalSliceActions } from "../../../slices/rateModalSlice";
+import { AppDispatch } from "../../../app_/store";
 
 const MovieDetails = () => {
     const movie = useSelector(getMovieDetailsData)
     const isLoading = useSelector(getMovieDetailsIsLoading)
     const error = useSelector(getMovieDetailsError)
+    const dispatch = useDispatch<AppDispatch>();
+
+    const onModalOpen = useCallback(() => {
+        dispatch(rateModalSliceActions.setMovieData(movie))
+        dispatch(rateModalSliceActions.setModal(true))
+    }, [dispatch, movie])
 
     const movieBreadcrumbsItems = [
         { title: 'Movies', href: '/movies' },
@@ -84,7 +93,9 @@ const MovieDetails = () => {
                     </Stack>
                 </Stack>
             </Flex>
-            <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
+            <Button variant="transparent" onClick={onModalOpen} p={0} ml={10}>
+                <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
+            </Button>        
         </Flex>
         <Stack p={24} gap={0}>
             {movie?.videos?.results?.find(video => video.type === "Trailer")?.key ? 

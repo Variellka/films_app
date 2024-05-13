@@ -1,6 +1,7 @@
 import { AppShell } from '@mantine/core';
 import { FC, PropsWithChildren } from "react";
 import Navbar from "./navbar/Navbar";
+import RateMovieModal from '../ui/RateMovieModal/RateMovieModal';
 
 const Layout:FC<PropsWithChildren> = ({children}) => {    
     return (
@@ -16,6 +17,7 @@ const Layout:FC<PropsWithChildren> = ({children}) => {
             </AppShell.Navbar>
             <AppShell.Main>
                 <div style={{padding: '40px 90px'}}>
+                    <RateMovieModal />
                     {children}
                 </div>
             </AppShell.Main>
