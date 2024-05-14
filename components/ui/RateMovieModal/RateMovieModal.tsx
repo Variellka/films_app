@@ -2,7 +2,7 @@ import { Button, Flex, Modal, Rating, Stack, Text } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieDataForModal, getRateModalState } from '../../../selectors/getRateModal';
 import { AppDispatch } from '../../../app_/store';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { rateModalSliceActions } from '../../../slices/rateModalSlice';
 
 const RateMovieModal = () => {
@@ -11,8 +11,16 @@ const RateMovieModal = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [rating, setRating] = useState(0);
 
+    useEffect(() => {
+        const item = localStorage.getItem(String(movie?.id));
+        if (item) {
+            setRating(Number(item));
+        }
+      }, [movie?.id]);
+
     const onClose = useCallback(() => {
         dispatch(rateModalSliceActions.setModal(false))
+        setRating(0)
     }, [dispatch])
 
     const onRateMovie = useCallback((value) => {
@@ -20,7 +28,7 @@ const RateMovieModal = () => {
     }, [])
 
     const onSaveRating = useCallback(() => {
-        localStorage.setItem(String(movie.id), JSON.stringify({...movie, rating}))
+        localStorage.setItem(String(movie.id), String(rating))
         dispatch(rateModalSliceActions.setModal(false))
     }, [dispatch, movie, rating])
 
@@ -40,7 +48,7 @@ const RateMovieModal = () => {
         >
             <Stack>
                 <Text fw={700}>{movie?.original_title}</Text>
-                <Rating defaultValue={0} count={10} size="xl" onChange={onRateMovie}/>
+                <Rating value={rating} count={10} size="xl" onChange={onRateMovie}/>
                 <Flex >
                     <Button variant='filled' onClick={onSaveRating}>Save</Button>
                     <Button variant='transparent' onClick={onCancelRating}>Remove rating</Button>

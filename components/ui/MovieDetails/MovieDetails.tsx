@@ -1,19 +1,30 @@
+"use client"
+
 import { AspectRatio, Button, Flex, Image, Stack, Text } from "@mantine/core";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../app_/store";
 import { getMovieDetailsData, getMovieDetailsError, getMovieDetailsIsLoading } from "../../../selectors/getMovieDetails";
+import { rateModalSliceActions } from "../../../slices/rateModalSlice";
 import { formatCurrency, formatDate, formatTime, formatVote } from "../../../utils/formatFunctions";
 import Loader from "../Loader/Loader";
 import MovieBreadcrumbs from "../MovieBreadcrumbs/MovieBreadcrumbs";
 import styles from './MovieDetails.module.css';
-import { useCallback } from "react";
-import { rateModalSliceActions } from "../../../slices/rateModalSlice";
-import { AppDispatch } from "../../../app_/store";
+import { getRateModalState } from "../../../selectors/getRateModal";
 
 const MovieDetails = () => {
     const movie = useSelector(getMovieDetailsData)
     const isLoading = useSelector(getMovieDetailsIsLoading)
     const error = useSelector(getMovieDetailsError)
     const dispatch = useDispatch<AppDispatch>();
+    const modalState = useSelector(getRateModalState)
+    const [rating, setRating] = useState(0)
+
+    useEffect(() => {
+        if  (movie?.id && !modalState) {
+            setRating(Number(localStorage.getItem(String(movie.id))))
+        }
+    }, [movie?.id, modalState])
 
     const onModalOpen = useCallback(() => {
         dispatch(rateModalSliceActions.setMovieData(movie))
@@ -93,9 +104,12 @@ const MovieDetails = () => {
                     </Stack>
                 </Stack>
             </Flex>
+
             <Button variant="transparent" onClick={onModalOpen} p={0} ml={10}>
-                <Image src='/StarEmpty.svg' alt="give a rate" w={28} h={28}/>
+                <Image src={rating ? '/starFilled.svg' : '/StarEmpty.svg'} alt="give a rate" w={28} h={28} key='rateStar'/>
+                {rating ? <Text fw={600} c='black' ml={4}>{rating}</Text> : null}
             </Button>        
+
         </Flex>
         <Stack p={24} gap={0}>
             {movie?.videos?.results?.find(video => video.type === "Trailer")?.key ? 
