@@ -14,7 +14,8 @@ const MovieCardPreview = ({movie}) => {
     const {pathname} = useRouter();
     const genres = useSelector(getGenresData);
     const genresDecoded = genres 
-    ? movie.genre_ids.map(id => genres.find(obj => obj.id === id)?.name).join(', ') 
+    ? movie?.genre_ids?.map(id => genres.find(obj => obj.id === id)?.name).join(', ') ||
+    movie?.genres?.map(genre => genre.name).join(', ')
     : null;
     const dispatch = useDispatch<AppDispatch>();
     const modalState = useSelector(getRateModalState)
@@ -22,7 +23,7 @@ const MovieCardPreview = ({movie}) => {
 
     useEffect(() => {
         if  (movie?.id && !modalState) {
-            const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '{}');
+            const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
             const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating
             setRating(movieSavedRating)
         }
@@ -46,7 +47,7 @@ const MovieCardPreview = ({movie}) => {
                 />
                 <Stack align="stretch" justify="space-between">
                     <Stack gap={8}>
-                        <Link href={`${pathname}/${movie.id}`} className={styles.MovieTitle}>
+                        <Link href={`movies/${movie?.id}`} className={styles.MovieTitle}>
                         <Text 
                             size="xl" 
                             fw={500} 
@@ -66,7 +67,7 @@ const MovieCardPreview = ({movie}) => {
                     </Stack>
                     <Text>
                         <Text span mr={8} className={styles.MovieGenre}>Genres</Text>
-                        {genresDecoded}
+                        {genresDecoded?.length ? genresDecoded: null}
                     </Text>
                 </Stack>
             </Flex>

@@ -13,13 +13,9 @@ const RateMovieModal = () => {
     const [rating, setRating] = useState(0);
 
     useEffect(() => {
-        const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '{}');
-        const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating
-
-        console.log(movieSavedRating)
-        if (movieSavedRating) {
-            setRating(Number(movieSavedRating));
-        }
+        const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
+        const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating || 0
+        setRating(Number(movieSavedRating))
       }, [movie?.id, rateModalState]);
 
     const onClose = useCallback(() => {
@@ -32,15 +28,16 @@ const RateMovieModal = () => {
     }, [])
 
     const onSaveRating = useCallback(() => {
-        updateMovieRating(movie?.id, rating)
+        rating !== 0 ? updateMovieRating(movie?.id, rating) : deleteMovieRating(movie.id);
         dispatch(rateModalSliceActions.setModal(false))
         setRating(0)
     }, [dispatch, movie, rating])
 
     const onCancelRating = useCallback(() => {
         deleteMovieRating(movie.id)
+        dispatch(rateModalSliceActions.setModal(false))
         setRating(0)
-    }, [movie?.id])
+    }, [dispatch, movie?.id])
 
     return (
         <Modal 

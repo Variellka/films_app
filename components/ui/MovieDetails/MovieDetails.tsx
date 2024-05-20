@@ -22,7 +22,7 @@ const MovieDetails = () => {
 
     useEffect(() => {
         if  (movie?.id && !modalState) {
-            const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '{}');
+            const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
             const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating
             setRating(movieSavedRating)
         }
