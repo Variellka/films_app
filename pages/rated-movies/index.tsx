@@ -1,17 +1,18 @@
 import { Button, Grid, Image, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { routes } from '../../app_/routes';
 import { AppDispatch } from '../../app_/store';
 import Layout from '../../components/layout/Layout';
-import { getRatedMoviesData, getRatedMoviesIds, getRatedMoviesIsLoading } from '../../selectors/getRatedMovies';
+import { getRatedMoviesData, getRatedMoviesIds, getRatedMoviesIsLoading, getRatedMoviesPageNum, getRatedMoviesTotalPages } from '../../selectors/getRatedMovies';
 import { fetchGenres } from '../../services/fetchGenres';
 import { fetchRatedMovies } from '../../services/fetchRatedMovies';
 import MovieCardPreview from '../../components/ui/MovieCardPreview/MovieCardPreview';
 import Loader from '../../components/ui/Loader/Loader';
 import { ratedMoviesSliceActions } from '../../slices/ratedMoviesSlice';
 import { getRateModalState } from '../../selectors/getRateModal';
+import MoviePagination from '../../components/ui/MoviePagination/MoviePagination';
 
 const RatedMoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -19,6 +20,8 @@ const RatedMoviesPage = () => {
     const ratedMovies = useSelector(getRatedMoviesData)
     const isLoading = useSelector(getRatedMoviesIsLoading)
     const modalState = useSelector(getRateModalState)
+    const page = useSelector(getRatedMoviesPageNum)
+    const totalPageNum = useSelector(getRatedMoviesTotalPages)
 
     const arraysEqual = (arr1, arr2) => {
         if (arr1?.length !== arr2?.length) {
@@ -33,7 +36,6 @@ const RatedMoviesPage = () => {
     }
  
     useEffect(() => {
-        dispatch(fetchGenres())
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
         const movieIds = moviesRating.map(movie => movie.id);
 
@@ -45,6 +47,10 @@ const RatedMoviesPage = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, modalState])
+
+    const setPage = useCallback((value) => {
+        dispatch(ratedMoviesSliceActions.setPage(value))
+      }, [dispatch])
 
     if (isLoading) {
         <Layout>
@@ -73,12 +79,20 @@ const RatedMoviesPage = () => {
         <Layout>
             <Title order={1}>Rated Movies</Title>
             <Grid >
-            {ratedMovies?.map(movie => (
+            {ratedMovies?.slice((page - 1) * 4, (page - 1) * 4 + 4).map(movie => (
                 <Grid.Col key={movie?.id} span={6}>
                     <MovieCardPreview movie={movie}/>
                 </Grid.Col>      
             ))}
-              </Grid>
+            </Grid>
+            {ratedMovies && ratedMovies.length > 4 ?
+              <MoviePagination 
+                totalPages={totalPageNum} 
+                setPage={setPage} 
+                page={page} 
+                justify={'center'}
+              /> 
+            : null}
         </Layout>
     );
 };

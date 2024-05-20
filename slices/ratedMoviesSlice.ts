@@ -5,7 +5,9 @@ const initialState = {
     ids: undefined,
     movies: undefined,
     isLoading: true,
-    error: undefined
+    error: undefined,
+    totalPagesNum: 0,
+    page: 1
 }
 
 export const ratedMoviesSlice = createSlice({
@@ -15,8 +17,8 @@ export const ratedMoviesSlice = createSlice({
     setIds: (state, action) => {
         state.ids = action.payload;
     },
-    setMovies: (state, action) => {
-        state.movies = action.payload;
+    setPage: (state, action) => {
+      state.page = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -28,6 +30,9 @@ export const ratedMoviesSlice = createSlice({
         .addCase(fetchRatedMovies.fulfilled, (state, action) => {
             state.isLoading = false;
             state.movies = action.payload;
+            if (action.payload) {
+              state.totalPagesNum = Math.ceil(action.payload.length / 4);
+            }
         })
         .addCase(fetchRatedMovies.rejected, (state, action) => {
           // @ts-ignore
