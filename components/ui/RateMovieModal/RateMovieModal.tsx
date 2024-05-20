@@ -4,6 +4,7 @@ import { getMovieDataForModal, getRateModalState } from '../../../selectors/getR
 import { AppDispatch } from '../../../app_/store';
 import { useCallback, useEffect, useState } from 'react';
 import { rateModalSliceActions } from '../../../slices/rateModalSlice';
+import { deleteMovieRating, updateMovieRating } from '../../../utils/changeMovieRating';
 
 const RateMovieModal = () => {
     const rateModalState = useSelector(getRateModalState);
@@ -12,11 +13,14 @@ const RateMovieModal = () => {
     const [rating, setRating] = useState(0);
 
     useEffect(() => {
-        const item = localStorage.getItem(String(movie?.id));
-        if (item) {
-            setRating(Number(item));
+        const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '{}');
+        const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating
+
+        console.log(movieSavedRating)
+        if (movieSavedRating) {
+            setRating(Number(movieSavedRating));
         }
-      }, [movie?.id]);
+      }, [movie?.id, rateModalState]);
 
     const onClose = useCallback(() => {
         dispatch(rateModalSliceActions.setModal(false))
@@ -28,12 +32,13 @@ const RateMovieModal = () => {
     }, [])
 
     const onSaveRating = useCallback(() => {
-        localStorage.setItem(String(movie.id), String(rating))
+        updateMovieRating(movie?.id, rating)
         dispatch(rateModalSliceActions.setModal(false))
+        setRating(0)
     }, [dispatch, movie, rating])
 
     const onCancelRating = useCallback(() => {
-        localStorage.removeItem(String(movie.id));
+        deleteMovieRating(movie.id)
         setRating(0)
     }, [movie?.id])
 
