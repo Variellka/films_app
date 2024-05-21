@@ -2,6 +2,7 @@
     &[data-variant='filled'] {
         background: var(--purple-500-main);
         color: var(--white);
+        border-radius: 8px;
     }
 
     &[data-variant='transparent'] {

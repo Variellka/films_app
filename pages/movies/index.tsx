@@ -7,7 +7,7 @@ import MovieFilters from "../../components/ui/MovieFilters/MovieFilters";
 import MoviePagination from "../../components/ui/MoviePagination/MoviePagination";
 import MovieSort from "../../components/ui/MovieSort/MovieSort";
 import MoviesList from "../../components/ui/MoviesList/MoviesList";
-import { getMoviesData, getMoviesPageNum, getMoviesTotalPages } from "../../selectors/getMovies";
+import { getMoviesData, getMoviesIsLoading, getMoviesPageNum, getMoviesTotalPages } from "../../selectors/getMovies";
 import { fetchGenres } from "../../services/fetchGenres";
 import { fetchMovies } from "../../services/fetchMovies";
 import { movieSliceActions } from "../../slices/movieSlice";
@@ -16,7 +16,8 @@ const MoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const page = useSelector(getMoviesPageNum)
     const totalPages = useSelector(getMoviesTotalPages);
-    const moviesLength = useSelector(getMoviesData).length
+    const moviesData = useSelector(getMoviesData);
+    const moviesIsLoading = useSelector(getMoviesIsLoading)
 
     useEffect(() => {
       dispatch(fetchMovies());
@@ -33,8 +34,8 @@ const MoviesPage = () => {
             <Title order={1} mb='40'>Movies</Title>
             <MovieFilters />
             <MovieSort />
-            <MoviesList/>
-            {moviesLength &&  totalPages !== 1 ?
+            <MoviesList movies={moviesData} isLoading={moviesIsLoading}/>
+            {moviesData?.length &&  totalPages !== 1 ?
               <MoviePagination 
                 totalPages={totalPages} 
                 setPage={setPage} 

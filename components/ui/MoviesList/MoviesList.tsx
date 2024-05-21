@@ -1,18 +1,13 @@
 import { Grid, Image, Stack, Text } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { getMoviesData, getMoviesIsLoading } from "../../../selectors/getMovies";
 import Loader from "../Loader/Loader";
 import MovieCardPreview from "../MovieCardPreview/MovieCardPreview";
 
-const MoviesList = () => {
-    const movies = useSelector(getMoviesData)
-    const isLoading = useSelector(getMoviesIsLoading)
-
+const MoviesList = ({movies, isLoading}) => {
     if (movies && movies.length) {
         return (
             <Grid >
                 {movies.map(movie => (
-                    <Grid.Col key={movie.id} span={6}>
+                    <Grid.Col key={movie.id} span={{ base: 12, md: 6}}>
                         <MovieCardPreview movie={movie}/>
                     </Grid.Col>
                 ))}

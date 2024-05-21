@@ -1,13 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 import { fetchRatedMovies } from '../services/fetchRatedMovies';
 
 const initialState = {
     ids: undefined,
     movies: undefined,
+    filteredMovies: undefined,
     isLoading: true,
     error: undefined,
     totalPagesNum: 0,
-    page: 1
+    page: 1,
+    search: '',
 }
 
 export const ratedMoviesSlice = createSlice({
@@ -19,6 +21,13 @@ export const ratedMoviesSlice = createSlice({
     },
     setPage: (state, action) => {
       state.page = action.payload;
+    },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+      // @ts-ignore
+      state.filteredMovies = current(state).movies.filter(item => 
+        item.original_title.toLowerCase().includes(action.payload.toLowerCase())
+      )
     },
   },
   extraReducers: (builder) => {

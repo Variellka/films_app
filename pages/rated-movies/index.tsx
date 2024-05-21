@@ -1,18 +1,17 @@
-import { Button, Grid, Image, Stack, Text, Title } from '@mantine/core';
+import { Button, Flex, Image, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { routes } from '../../app_/routes';
 import { AppDispatch } from '../../app_/store';
 import Layout from '../../components/layout/Layout';
-import { getRatedMoviesData, getRatedMoviesIds, getRatedMoviesIsLoading, getRatedMoviesPageNum, getRatedMoviesTotalPages } from '../../selectors/getRatedMovies';
-import { fetchGenres } from '../../services/fetchGenres';
-import { fetchRatedMovies } from '../../services/fetchRatedMovies';
-import MovieCardPreview from '../../components/ui/MovieCardPreview/MovieCardPreview';
-import Loader from '../../components/ui/Loader/Loader';
-import { ratedMoviesSliceActions } from '../../slices/ratedMoviesSlice';
-import { getRateModalState } from '../../selectors/getRateModal';
 import MoviePagination from '../../components/ui/MoviePagination/MoviePagination';
+import RatedMoviesSearch from '../../components/ui/RatedMoviesSearch/RatedMoviesSearch';
+import MoviesList from '../../components/ui/MoviesList/MoviesList';
+import { getRateModalState } from '../../selectors/getRateModal';
+import { getRatedMoviesData, getRatedMoviesFiltered, getRatedMoviesIds, getRatedMoviesIsLoading, getRatedMoviesPageNum, getRatedMoviesSearch, getRatedMoviesTotalPages } from '../../selectors/getRatedMovies';
+import { fetchRatedMovies } from '../../services/fetchRatedMovies';
+import { ratedMoviesSliceActions } from '../../slices/ratedMoviesSlice';
 
 const RatedMoviesPage = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -22,26 +21,16 @@ const RatedMoviesPage = () => {
     const modalState = useSelector(getRateModalState)
     const page = useSelector(getRatedMoviesPageNum)
     const totalPageNum = useSelector(getRatedMoviesTotalPages)
-
-    const arraysEqual = (arr1, arr2) => {
-        if (arr1?.length !== arr2?.length) {
-            return false;
-        }
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
+    const filteredMovies = useSelector(getRatedMoviesFiltered)
+    const search = useSelector(getRatedMoviesSearch)
  
+    const moviesToRender = search ? filteredMovies : ratedMovies
+
     useEffect(() => {
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
         const movieIds = moviesRating.map(movie => movie.id);
 
-        if (!arraysEqual(movieIds, ids) || !ratedMovies) {
-            let moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
-            const movieIds = moviesRating.map(movie => movie.id);
+        if (movieIds?.toString() !== ids?.toString() || !ratedMovies) {
             dispatch(ratedMoviesSliceActions.setIds(movieIds))
             dispatch(fetchRatedMovies(movieIds))
         }
@@ -51,12 +40,6 @@ const RatedMoviesPage = () => {
     const setPage = useCallback((value) => {
         dispatch(ratedMoviesSliceActions.setPage(value))
       }, [dispatch])
-
-    if (isLoading) {
-        <Layout>
-            <Loader />
-        </Layout>
-    }
 
     if (!ratedMovies?.length && !isLoading) {
         return (
@@ -77,15 +60,15 @@ const RatedMoviesPage = () => {
 
     return (
         <Layout>
-            <Title order={1}>Rated Movies</Title>
-            <Grid >
-            {ratedMovies?.slice((page - 1) * 4, (page - 1) * 4 + 4).map(movie => (
-                <Grid.Col key={movie?.id} span={6}>
-                    <MovieCardPreview movie={movie}/>
-                </Grid.Col>      
-            ))}
-            </Grid>
-            {ratedMovies && ratedMovies.length > 4 ?
+            <Flex justify='space-between' mb={40}>
+                <Title order={1}>Rated Movies</Title>
+                <RatedMoviesSearch />
+            </Flex>
+            <MoviesList 
+                movies={moviesToRender?.slice((page - 1) * 4, (page - 1) * 4 + 4)} 
+                isLoading={isLoading}
+            />
+            {moviesToRender && moviesToRender.length > 4 ?
               <MoviePagination 
                 totalPages={totalPageNum} 
                 setPage={setPage} 
