@@ -37,7 +37,7 @@ const MovieDetails = () => {
 
     const movieBreadcrumbsItems = [
         { title: 'Movies', href: '/movies' },
-        { title: movie?.original_title},
+        { title: movie?.title},
     ]
 
     if (isLoading) {
@@ -70,7 +70,7 @@ const MovieDetails = () => {
                                 fw={500}   
                                 className={styles.MovieTitle}
                             >
-                                {movie?.original_title}
+                                {movie?.title}
                             </Text>
                             <Text size="md" className={styles.subtitle}>
                                 {movie?.release_date?.split('-')[0]}
@@ -78,7 +78,7 @@ const MovieDetails = () => {
                             <Flex>
                                 <Image src='/Star.svg' alt="rating" w={28} h={28} mr={4}/>
                                 <Text size="md" fw={600}>{movie?.vote_average?.toFixed(1)}
-                                    <Text span fw={400} className={styles.subtitle}>
+                                    <Text span fw={400} c='var(--grey-600)'>
                                         &nbsp;{`(${formatVote(movie?.vote_count)})`}
                                     </Text>
                                 </Text>

@@ -56,7 +56,7 @@ const MovieCardPreview = ({movie}) => {
                             maw={240}
                             className={styles.MovieTitle}
                         >
-                            {movie?.original_title}
+                            {movie?.title}
                         </Text>
                         </Link>
                         
