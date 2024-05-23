@@ -1,12 +1,13 @@
 import { Button, Flex, MultiSelect, Select } from "@mantine/core";
-import { useCallback } from "react";
+import { useMediaQuery } from "@mantine/hooks";
+import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../app_/store";
 import { getGenresData } from "../../../selectors/getGenres";
 import { getMoviesGenres, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear } from "../../../selectors/getMovies";
 import { fetchMovies } from "../../../services/fetchMovies";
 import { movieSliceActions } from "../../../slices/movieSlice";
-import { useMediaQuery } from "@mantine/hooks";
 
 const getYears = (startYear, endYear, fn = i => i) => {
     const length = endYear - startYear + 1;
@@ -22,6 +23,18 @@ const MovieFilters = () => {
     const ratingLowest = useSelector(getMoviesRatingLowest);
     const ratingHighest = useSelector(getMoviesRatingHighest)
     const isSmallScreen = useMediaQuery('(max-width: 1090px)');
+    const [dropdownStates, setDropdownStates] = useState({
+        genreSelect: false,
+        yearSelect: false,
+      });
+   
+      const handleDropdownOpen = (key) => {
+        setDropdownStates((prevState) => ({ ...prevState, [key]: true }));
+      };
+    
+      const handleDropdownClose = (key) => {
+        setDropdownStates((prevState) => ({ ...prevState, [key]: false }));
+      };
 
     const fetchData = useCallback(() => {
         dispatch(movieSliceActions.setPage(1));
@@ -72,6 +85,12 @@ const MovieFilters = () => {
                 onChange={setGenre}
                 key={currentGenres?.map(genre => genre.name)}
                 w={isSmallScreen ? '100%' : '28%'}
+                onDropdownOpen={() => handleDropdownOpen('genreSelect')}
+                onSearchChange={() => handleDropdownClose('genreSelect')}
+                rightSection={dropdownStates.genreSelect ? 
+                    <IconChevronUp strokeWidth={1} color="var(--purple-500-main)"/> : 
+                    <IconChevronDown strokeWidth={1}/>
+                }
             />
             <Select
                 label="Release year"
@@ -82,6 +101,12 @@ const MovieFilters = () => {
                 searchable
                 key={releaseDate}
                 w={isSmallScreen ? '100%' : '28%'}
+                onDropdownOpen={() => handleDropdownOpen('yearSelect')}
+                onDropdownClose={() => handleDropdownClose('yearSelect')}
+                rightSection={dropdownStates.yearSelect ? 
+                    <IconChevronUp strokeWidth={1} color="var(--purple-500-main)"/> : 
+                    <IconChevronDown strokeWidth={1}/>
+                }
             />
             <Flex 
                 gap={8}  

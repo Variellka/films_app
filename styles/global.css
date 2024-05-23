@@ -23,3 +23,7 @@
 body {
     background-color: var(--grey-100);
 }
+
+.mantine-Input-input:focus, .mantine-Input-input:focus-within {
+  border: 1px solid var(--purple-500-main) !important;
+}

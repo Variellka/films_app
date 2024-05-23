@@ -1,10 +1,11 @@
 import { Flex, Select } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoviesSortBy } from "../../../selectors/getMovies";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { AppDispatch } from "../../../app_/store";
 import { movieSliceActions } from "../../../slices/movieSlice";
 import { fetchMovies } from "../../../services/fetchMovies";
+import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 const movieSortOptions = [
     {
@@ -36,6 +37,7 @@ const movieSortOptions = [
 const MovieSort = () => {
     const sortOption = useSelector(getMoviesSortBy);
     const dispatch = useDispatch<AppDispatch>();
+    const [dropdownState, setDropdownState] = useState(false);
 
     const fetchData = useCallback(() => {
         dispatch(movieSliceActions.setPage(1));
@@ -57,6 +59,12 @@ const MovieSort = () => {
                 onChange={setSortOption}
                 value={sortOption.name}
                 key={sortOption.name}
+                onDropdownOpen={() => setDropdownState(true)}
+                onDropdownClose={() => setDropdownState(false)}
+                rightSection={dropdownState ? 
+                    <IconChevronUp strokeWidth={1} color="var(--purple-500-main)"/> : 
+                    <IconChevronDown strokeWidth={1}/>
+                }
             />
         </Flex>
     );

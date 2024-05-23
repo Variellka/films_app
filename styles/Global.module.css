@@ -5,6 +5,14 @@
         border-radius: 8px;
     }
 
+    &[data-variant='filled']:hover {
+        background: var(--purple-400);
+    }
+
+    &[data-variant='filled']:focus, &[data-variant='filled']:focus-within {
+        background: var(--purple-600);
+    }
+
     &[data-variant='transparent'] {
         color: var(--purple-500-main);
     }
