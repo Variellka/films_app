@@ -1,17 +1,18 @@
 "use client"
 
 import { AspectRatio, Button, Flex, Image, Stack, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../app_/store";
 import { getMovieDetailsData, getMovieDetailsError, getMovieDetailsIsLoading } from "../../../selectors/getMovieDetails";
+import { getRateModalState } from "../../../selectors/getRateModal";
 import { rateModalSliceActions } from "../../../slices/rateModalSlice";
 import { formatCurrency, formatDate, formatTime, formatVote } from "../../../utils/formatFunctions";
 import Loader from "../Loader/Loader";
 import MovieBreadcrumbs from "../MovieBreadcrumbs/MovieBreadcrumbs";
 import styles from './MovieDetails.module.css';
-import { getRateModalState } from "../../../selectors/getRateModal";
-import { useMediaQuery } from "@mantine/hooks";
 
 const MovieDetails = () => {
     const movie = useSelector(getMovieDetailsData)
@@ -21,6 +22,7 @@ const MovieDetails = () => {
     const modalState = useSelector(getRateModalState)
     const [rating, setRating] = useState(0)
     const isSmallScreen = useMediaQuery('(max-width: 768px)');
+    const router = useRouter()
 
     useEffect(() => {
         if  (movie?.id && !modalState) {
@@ -47,7 +49,7 @@ const MovieDetails = () => {
     }
 
     if (error) {
-        return null
+        return router.push("/404")
     }
 
     return (
