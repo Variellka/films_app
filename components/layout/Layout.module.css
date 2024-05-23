@@ -1,0 +1,13 @@
+.Layout {
+    padding: 20px 35px !important;
+  }
+  @media (min-width: 1090px) and (max-width: 1439px) {
+    .Layout {
+      padding: 30px 60px !important;
+    }
+  }
+  @media (min-width: 1440px) {
+    .Layout {
+      padding: 40px 90px !important;
+    }
+  }

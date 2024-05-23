@@ -4,11 +4,13 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app_/store';
 import { ratedMoviesSliceActions } from '../../../slices/ratedMoviesSlice';
+import { useMediaQuery } from '@mantine/hooks';
 
 const RatedMoviesSearch = () => {
     const [search, setSearch] = useState('');
     const icon = <IconSearch style={{ width: rem(16), height: rem(16) }} />;
     const dispatch = useDispatch<AppDispatch>()
+    const isSmallScreen = useMediaQuery('(max-width: 1090px)');
 
     const onSearch = useCallback(() => {
         dispatch(ratedMoviesSliceActions.setSearch(search));
@@ -35,7 +37,7 @@ const RatedMoviesSearch = () => {
                 }
                 rightSectionWidth={100}
                 styles={{input: {height: '48px', border: 'none'}}}
-                w='50%'
+                w={isSmallScreen ? '100%' : '50%'}
             />
     );
 };

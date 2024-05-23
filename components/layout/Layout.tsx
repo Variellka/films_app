@@ -1,22 +1,30 @@
-import { AppShell } from '@mantine/core';
+import { AppShell, Burger } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { FC, PropsWithChildren } from "react";
-import Navbar from "./navbar/Navbar";
 import RateMovieModal from '../ui/RateMovieModal/RateMovieModal';
+import styles from './Layout.module.css';
+import Navbar from "./navbar/Navbar";
 
-const Layout:FC<PropsWithChildren> = ({children}) => {    
+const Layout:FC<PropsWithChildren> = ({children}) => {  
+    const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+
     return (
         <AppShell
             navbar={{
                 width: 280,
-                breakpoint: 'sm',
+                breakpoint: 'md',
+                collapsed: { mobile: !mobileOpened }
             }}
             withBorder={false}
         >
-            <AppShell.Navbar p={24}>
-                <Navbar />
+            <AppShell.Header w={20}>
+            <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="md" size="sm" />
+            </AppShell.Header>
+            <AppShell.Navbar p={24} >
+                <Navbar toggleMobile={toggleMobile}/>
             </AppShell.Navbar>
             <AppShell.Main>
-                <div style={{padding: '40px 90px'}}>
+                <div className={styles.Layout}>
                     <RateMovieModal />
                     {children}
                 </div>

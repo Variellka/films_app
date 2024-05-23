@@ -1,13 +1,16 @@
 import { Grid, Image, Stack, Text } from "@mantine/core";
 import Loader from "../Loader/Loader";
 import MovieCardPreview from "../MovieCardPreview/MovieCardPreview";
+import { useMediaQuery } from "@mantine/hooks";
 
 const MoviesList = ({movies, isLoading}) => {
+    const isSmallScreen = useMediaQuery('(max-width: 1090px)');
+
     if (movies && movies.length) {
         return (
-            <Grid >
+            <Grid>
                 {movies.map(movie => (
-                    <Grid.Col key={movie.id} span={{ base: 12, md: 6}}>
+                    <Grid.Col key={movie.id} span={isSmallScreen ? 12 : 6}>
                         <MovieCardPreview movie={movie}/>
                     </Grid.Col>
                 ))}
@@ -23,7 +26,7 @@ const MoviesList = ({movies, isLoading}) => {
 
     return (
         <Stack align="center" justify="center" gap={16}>
-            <Image src='/noMovies.svg' alt='no movies found' w='310'/>
+            <Image src='/noMovies.svg' alt='no movies found' maw='310'/>
             <Text size="xl" fw={600}>We don&apos;t have such movies, look for another one</Text>
         </Stack>
     );

@@ -5,12 +5,14 @@ import { AppDispatch } from '../../../app_/store';
 import { useCallback, useEffect, useState } from 'react';
 import { rateModalSliceActions } from '../../../slices/rateModalSlice';
 import { deleteMovieRating, updateMovieRating } from '../../../utils/changeMovieRating';
+import { useMediaQuery } from '@mantine/hooks';
 
 const RateMovieModal = () => {
     const rateModalState = useSelector(getRateModalState);
     const movie = useSelector(getMovieDataForModal);
     const dispatch = useDispatch<AppDispatch>();
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(0);    
+    const isSmallScreen = useMediaQuery('(max-width: 400px)');
 
     useEffect(() => {
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
@@ -50,7 +52,7 @@ const RateMovieModal = () => {
         >
             <Stack>
                 <Text fw={700}>{movie?.original_title}</Text>
-                <Rating value={rating} count={10} size="xl" onChange={onRateMovie}/>
+                <Rating value={rating} count={10} size={isSmallScreen? 'md' : 'xl'} onChange={onRateMovie}/>
                 <Flex >
                     <Button variant='filled' onClick={onSaveRating}>Save</Button>
                     <Button variant='transparent' onClick={onCancelRating}>Remove rating</Button>

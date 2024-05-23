@@ -12,7 +12,7 @@ const theme = createTheme({
     },
   });
 
-const Navbar = () => {
+const Navbar = ({toggleMobile}) => {
     const {pathname} = useRouter();
 
     return (
@@ -24,6 +24,7 @@ const Navbar = () => {
                         variant={pathname.includes(routes.MOVIES) ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
+                        onClick={toggleMobile}
                     >
                         <Text size="md">Movies</Text>
                     </Button>

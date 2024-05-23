@@ -12,8 +12,10 @@ import { getRateModalState } from '../../selectors/getRateModal';
 import { getRatedMoviesData, getRatedMoviesFiltered, getRatedMoviesIds, getRatedMoviesIsLoading, getRatedMoviesPageNum, getRatedMoviesSearch, getRatedMoviesTotalPages } from '../../selectors/getRatedMovies';
 import { fetchRatedMovies } from '../../services/fetchRatedMovies';
 import { ratedMoviesSliceActions } from '../../slices/ratedMoviesSlice';
+import { useMediaQuery } from '@mantine/hooks';
 
 const RatedMoviesPage = () => {
+    const isSmallScreen = useMediaQuery('(max-width: 1090px)');
     const dispatch = useDispatch<AppDispatch>()
     const ids = useSelector(getRatedMoviesIds)
     const ratedMovies = useSelector(getRatedMoviesData)
@@ -23,7 +25,6 @@ const RatedMoviesPage = () => {
     const totalPageNum = useSelector(getRatedMoviesTotalPages)
     const filteredMovies = useSelector(getRatedMoviesFiltered)
     const search = useSelector(getRatedMoviesSearch)
- 
     const moviesToRender = search ? filteredMovies : ratedMovies
 
     useEffect(() => {
@@ -60,7 +61,7 @@ const RatedMoviesPage = () => {
 
     return (
         <Layout>
-            <Flex justify='space-between' mb={40}>
+            <Flex justify='space-between' mb={40} direction={isSmallScreen ? 'column' : 'row'}>
                 <Title order={1}>Rated Movies</Title>
                 <RatedMoviesSearch />
             </Flex>
