@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../app_/store";
 import { getGenresData } from "../../../selectors/getGenres";
-import { getMoviesGenre, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear } from "../../../selectors/getMovies";
+import { getMoviesGenres, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear } from "../../../selectors/getMovies";
 import { fetchMovies } from "../../../services/fetchMovies";
 import { movieSliceActions } from "../../../slices/movieSlice";
 import { useMediaQuery } from "@mantine/hooks";
@@ -17,7 +17,7 @@ const MovieFilters = () => {
     const dispatch = useDispatch<AppDispatch>()
     const genres = useSelector(getGenresData);
     const genresNames = genres.map(item => item.name)
-    const currentGenre = useSelector(getMoviesGenre);
+    const currentGenres = useSelector(getMoviesGenres);
     const releaseDate = useSelector(getMoviesReleaseYear)
     const ratingLowest = useSelector(getMoviesRatingLowest);
     const ratingHighest = useSelector(getMoviesRatingHighest)
@@ -28,9 +28,17 @@ const MovieFilters = () => {
         dispatch(fetchMovies());
     }, [dispatch]);
 
-    const setGenre = useCallback((value) => {
-        const genreId = genres.find(item => item.name === value);
-        dispatch(movieSliceActions.setGenre(genreId))
+    const setGenre = useCallback((selectedGenres) => {
+        const lookup = genres.reduce((acc, item) => {
+        acc[item.name] = item.id;
+            return acc;
+        }, {});
+
+        const resultArray = selectedGenres.map(name => ({
+            name: name,
+            id: lookup[name]
+        }));
+        dispatch(movieSliceActions.setGenres(resultArray))
         fetchData()
     }, [dispatch, fetchData, genres])
 
@@ -60,9 +68,9 @@ const MovieFilters = () => {
                 label="Genres"
                 placeholder="Select genre"
                 data={genresNames}
-                value={currentGenre?.name}
+                value={currentGenres?.map(genre => genre.name)}
                 onChange={setGenre}
-                key={currentGenre?.name}
+                key={currentGenres?.map(genre => genre.name)}
                 w={isSmallScreen ? '100%' : '28%'}
             />
             <Select

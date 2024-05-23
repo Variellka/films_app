@@ -6,7 +6,7 @@ const initialState = {
   isLoading: true,
   error: undefined,
   page: 1,
-  genre: undefined,
+  genres: undefined,
   releaseYear: undefined,
   sortBy: {
     name: 'Most popular',
@@ -24,8 +24,8 @@ export const movieSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
-    setGenre: (state, action) => {
-      state.genre = action.payload;
+    setGenres: (state, action) => {
+      state.genres = action.payload;
     },
     setReleaseYear: (state, action) => {
       state.releaseYear = action.payload;
@@ -41,7 +41,7 @@ export const movieSlice = createSlice({
     },
     resetFilters:  (state) => {
       state.page = 1;
-      state.genre = undefined;
+      state.genres = undefined;
       state.releaseYear = undefined;
       state.ratingLowest = undefined;
       state.ratingHighest = undefined;

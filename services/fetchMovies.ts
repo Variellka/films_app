@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getMoviesGenre, getMoviesPageNum, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear, getMoviesSortBy } from "../selectors/getMovies";
+import { getMoviesGenres, getMoviesPageNum, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear, getMoviesSortBy } from "../selectors/getMovies";
 
 const url = process.env.URL_FOR_MOVIES!;
 const options = {
@@ -14,7 +14,7 @@ const options = {
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, thunkApi) => {
         const { getState } = thunkApi;
         const page = getMoviesPageNum(getState()); 
-        const genre = getMoviesGenre(getState());
+        const genres = getMoviesGenres(getState());
         const releaseYear = getMoviesReleaseYear(getState());
         const sortBy = getMoviesSortBy(getState());
         const ratingLowest = getMoviesRatingLowest(getState());
@@ -23,7 +23,7 @@ export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, thun
         try {
             const response = await axios.get(url, {...options, params: {
                 language: 'en-US',
-                with_genres: genre?.id,
+                with_genres: genres?.map(item => item.id).join(),
                 primary_release_year: releaseYear,
                 'vote_average.gte': ratingLowest,
                 'vote_average.lte': ratingHighest,
