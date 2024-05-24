@@ -1,5 +1,3 @@
-"use client"
-
 import { AspectRatio, Button, Flex, Image, Stack, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
