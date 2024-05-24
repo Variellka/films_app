@@ -13,8 +13,8 @@ import { useMediaQuery } from "@mantine/hooks";
 const MovieCardPreview = ({movie}) => {
     const genres = useSelector(getGenresData);
     const genresNames = genres 
-    ? movie?.genre_ids?.map(id => genres.find(obj => obj.id === id)?.name) ||
-    movie?.genres?.map(genre => genre.name)
+    ? (Array.isArray(movie?.genre_ids) && movie?.genre_ids?.map(id => genres.find(obj => obj.id === id)?.name)) ||
+    (Array.isArray(movie?.genres) && movie?.genres?.map(genre => genre.name))
     : null;
     const genresDecoded = genresNames?.length > 2 ? genresNames?.splice(0,2).join(', ') + '...' : genresNames?.join(', ');
     const isSmallScreen = useMediaQuery('(max-width: 768px)');

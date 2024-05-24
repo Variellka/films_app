@@ -81,9 +81,9 @@ const MovieFilters = () => {
                 label="Genres"
                 placeholder="Select genre"
                 data={genresNames}
-                value={currentGenres?.map(genre => genre.name)}
+                value={Array.isArray(currentGenres) && currentGenres?.map(genre => genre.name) || undefined}
                 onChange={setGenre}
-                key={currentGenres?.map(genre => genre.name)}
+                key='genres'
                 w={isSmallScreen ? '100%' : '28%'}
                 onDropdownOpen={() => handleDropdownOpen('genreSelect')}
                 onSearchChange={() => handleDropdownClose('genreSelect')}
