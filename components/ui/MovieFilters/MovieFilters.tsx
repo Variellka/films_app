@@ -17,7 +17,7 @@ const getYears = (startYear, endYear, fn = i => i) => {
 const MovieFilters = () => {
     const dispatch = useDispatch<AppDispatch>()
     const genres = useSelector(getGenresData);
-    const genresNames = genres.map(item => item.name)
+    const genresNames = genres?.map(item => item.name)
     const currentGenres = useSelector(getMoviesGenres);
     const releaseDate = useSelector(getMoviesReleaseYear)
     const ratingLowest = useSelector(getMoviesRatingLowest);

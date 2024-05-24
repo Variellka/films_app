@@ -142,7 +142,7 @@ const MovieDetails = () => {
                     <>
                     <Text size="xl" fw={700} mb={16}>Production</Text>
                     <Stack>
-                    {movie.production_companies.map(company => (
+                    {movie.production_companies?.map(company => (
                         <Flex key={company.id} align='center'>
                             {company?.logo_path ? <Image 
                                 src={`https://image.tmdb.org/t/p/w500/${company?.logo_path}`} 
