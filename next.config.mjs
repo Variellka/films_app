@@ -11,15 +11,15 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/api/:path*',
+        source: '/:path*',
         headers: [
-          {
-            key: 'Authorization',
-            value: process.env.AUTH_KEY,
-          },
           {
             key: 'accept',
             value: 'application/json',
+          },
+          {
+            key: 'Authorization',
+            value: process.env.AUTH_KEY,
           },
           {
             key: 'Cache-Control',
