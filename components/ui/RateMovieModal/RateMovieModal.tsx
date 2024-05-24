@@ -51,7 +51,7 @@ const RateMovieModal = () => {
             key='rateModal'
         >
             <Stack>
-                <Text fw={700}>{movie?.original_title}</Text>
+                <Text fw={700}>{movie?.title}</Text>
                 <Rating value={rating} count={10} size={isSmallScreen? 'md' : 'xl'} onChange={onRateMovie}/>
                 <Flex >
                     <Button variant='filled' onClick={onSaveRating}>Save</Button>

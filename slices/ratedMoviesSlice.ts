@@ -26,7 +26,7 @@ export const ratedMoviesSlice = createSlice({
       state.search = action.payload;
       // @ts-ignore
       state.filteredMovies = current(state).movies.filter(item => 
-        item.original_title.toLowerCase().includes(action.payload.toLowerCase())
+        item.title.toLowerCase().includes(action.payload.toLowerCase())
       )
     },
   },
