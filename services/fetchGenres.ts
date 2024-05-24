@@ -16,7 +16,7 @@ export const fetchGenres = createAsyncThunk('genres/fetchGenres', async () => {
 
             if (!response) {
                 throw new Error();
-            }
+            } 
 
             return response.data.genres;
         } catch (e) {
