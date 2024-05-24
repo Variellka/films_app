@@ -3,6 +3,13 @@ import axios from "axios";
 import { getMoviesGenres, getMoviesPageNum, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear, getMoviesSortBy } from "../selectors/getMovies";
 
 const url = process.env.URL_FOR_MOVIES!;
+const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: process.env.AUTH_KEY
+    }
+  };
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, thunkApi) => {
         const { getState } = thunkApi;
@@ -14,7 +21,7 @@ export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, thun
         const ratingHighest = getMoviesRatingHighest(getState());
 
         try {
-            const response = await axios.get(url, {params: {
+            const response = await axios.get(url, {...options, params: {
                 language: 'en-US',
                 with_genres: genres?.map(item => item.id).join(),
                 primary_release_year: releaseYear,

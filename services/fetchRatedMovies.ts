@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getMovieDetailsId } from "../selectors/getMovieDetails";
 
 const url = process.env.URL_FOR_MOVIE_DETAILS!;
 const options = {
