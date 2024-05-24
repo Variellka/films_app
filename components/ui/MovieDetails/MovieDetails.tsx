@@ -47,7 +47,11 @@ const MovieDetails = () => {
     }
 
     if (error) {
-        return router.push("/404")
+        return (
+            <>
+            {router.push("/404")}
+            </>
+        )   
     }
 
     return (
