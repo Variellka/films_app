@@ -25,23 +25,6 @@ const nextConfig = {
 			},
     ]
   },
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'accept',
-            value: 'application/json',
-          },
-          {
-            key: 'Authorization',
-            value: process.env.AUTH_KEY,
-          },
-        ],
-      },
-    ]
-  },
 };
 
 export default nextConfig;
