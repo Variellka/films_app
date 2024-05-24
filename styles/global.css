@@ -1,0 +1,50 @@
+:root {
+    /* color styles: */
+    --white: #FFFFFF;
+
+    --grey-100: #F5F5F6;
+    --grey-200: #EAEBED;
+    --grey-300: #D5D6DC;
+    --grey-500: #ACADB9;
+    --grey-600: #7B7C88;
+
+    --black: #232134;
+
+    --purple-600: #541F9D;
+    --purple-500-main: #9854F6;
+    --purple-400: #BD93F7;
+    --purple-300: #D1B4F8;
+    --purple-200: #E5D5FA;
+    --purple-100: #F2EBF9;
+
+    --yellow: #FAB005;
+  }
+
+body {
+    background-color: var(--grey-100);
+}
+
+.mantine-Input-input:focus, .mantine-Input-input:focus-within {
+  border: 1px solid var(--purple-500-main) !important;
+}
+
+.mantine-MultiSelect-pill {
+  padding: 0;
+  font-size: 14px;
+}
+.mantine-MultiSelect-pill button{
+  display: none;
+}
+
+.mantine-MultiSelect-option {
+  margin-bottom: 1px;
+}
+
+.mantine-MultiSelect-option[data-checked="true"], .mantine-Select-option[data-checked="true"] {
+  background-color: var(--purple-500-main);
+  color: var(--white);
+}
+
+.mantine-MultiSelect-option[data-checked="true"] svg, .mantine-Select-option[data-checked="true"] svg {
+  display: none;  
+}

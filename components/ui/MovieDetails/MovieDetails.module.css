@@ -1,0 +1,45 @@
+.MovieTitle {
+    color: var(--purple-500-main);
+}
+
+.subtitle {
+    color: var(--grey-600);
+    display: flex;
+    width: min-content;
+}
+
+.MovieDetails {
+    margin: 0 !important;
+  }
+  @media (min-width: 1090px) and (max-width: 1439px) {
+    .MovieDetails {
+        margin: 0 40px !important;
+    }
+    .subtitle {
+        width: 140px !important;
+    }
+  }
+  @media (min-width: 1440px) {
+    .MovieDetails {
+        margin: 0 90px !important;
+        position: relative;
+    }
+    .subtitle {
+        width: 140px !important;
+    }
+  }
+
+.RateButton {
+    span {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .RateButton {
+        position: absolute;
+        right: 20px;
+    }
+}

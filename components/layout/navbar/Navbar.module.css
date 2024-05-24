@@ -1,0 +1,35 @@
+.Navbar {
+    background: var(--purple-100);
+    a {
+        all: unset;
+    }
+
+    button {
+        padding: 10px;
+        margin-bottom: 16px;
+    }
+}
+
+.root {
+    &[data-variant='subtle'] {
+        &:hover {
+            background: none;
+            span {
+                color: var(--purple-500-main);
+            }
+        }
+
+        span {
+            color: var(--black);
+        }
+    };
+    
+    &[data-variant='active'] {
+        background: var(--purple-200);
+        color: var(--purple-500-main);
+        
+        p {
+            font-weight: 700;
+        }
+    }
+}

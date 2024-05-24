@@ -1,0 +1,32 @@
+.root {
+    &[data-variant='filled'] {
+        background: var(--purple-500-main);
+        color: var(--white);
+        border-radius: 8px;
+    }
+
+    &[data-variant='filled']:hover {
+        background: var(--purple-400);
+    }
+
+    &[data-variant='filled']:focus, &[data-variant='filled']:focus-within {
+        background: var(--purple-600);
+    }
+
+    &[data-variant='filled']:focus span, &[data-variant='filled']:focus-within span {
+        background: var(--purple-600);
+        color: var(--white);
+    }
+
+    &[data-variant='transparent'] {
+        color: var(--purple-500-main);
+    }
+
+    &[data-variant='white']:hover {
+        color: var(--purple-400);
+    }
+
+    &[data-variant='white']:focus, &[data-variant='filled']:focus-within {
+        color: var(--purple-600);
+    }
+}

@@ -1,5 +1,10 @@
-import { createTheme } from "@mantine/core";
+import { Button, createTheme } from "@mantine/core";
+import styles from './styles/Global.module.css'
 
 export const theme = createTheme({
-  /* Put your mantine theme override here */
+  components: {
+    Button: Button.extend({
+      classNames: styles,
+    })
+  },
 });
