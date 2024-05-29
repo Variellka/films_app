@@ -19,7 +19,7 @@ const RateMovieModal = () => {
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
         const movieSavedRating = moviesRating?.find((item: IMovieRating) => item.id === movie?.id)?.rating || 0
         setRating(Number(movieSavedRating))
-      }, [movie?.id, rateModalState]);
+    }, [movie?.id, rateModalState]);
 
     const onClose = useCallback(() => {
         dispatch(rateModalSliceActions.setModal(false))

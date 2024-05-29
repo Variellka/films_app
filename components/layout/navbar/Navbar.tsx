@@ -6,11 +6,11 @@ import { routes } from "../../../app_/routes";
 
 const theme = createTheme({
     components: {
-      Button: Button.extend({
-        classNames: styles,
-      })
+        Button: Button.extend({
+            classNames: styles,
+        })
     },
-  });
+});
 
 interface NavbarProps {
     toggleMobile: () => void
