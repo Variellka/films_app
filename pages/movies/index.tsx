@@ -20,13 +20,13 @@ const MoviesPage = () => {
     const moviesIsLoading = useSelector(getMoviesIsLoading)
 
     useEffect(() => {
-      dispatch(fetchMovies());
-      dispatch(fetchGenres())
+        dispatch(fetchMovies());
+        dispatch(fetchGenres())
     }, [dispatch]); 
 
-    const setPage = useCallback((value) => {
-      dispatch(movieSliceActions.setPage(value))
-      dispatch(fetchMovies())
+    const setPage = useCallback((value: number) => {
+        dispatch(movieSliceActions.setPage(value))
+        dispatch(fetchMovies())
     }, [dispatch])
 
     return (
@@ -36,13 +36,13 @@ const MoviesPage = () => {
             <MovieSort />
             <MoviesList movies={moviesData} isLoading={moviesIsLoading}/>
             {moviesData?.length &&  totalPages !== 1 ?
-              <MoviePagination 
-                totalPages={totalPages} 
-                setPage={setPage} 
-                page={page} 
-                justify={'end'}
-              /> 
-            : null}
+                <MoviePagination 
+                    totalPages={totalPages} 
+                    setPage={setPage} 
+                    page={page} 
+                    justify={'end'}
+                /> 
+                : null}
         </Layout>
     );
 };

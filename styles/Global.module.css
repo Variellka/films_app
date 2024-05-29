@@ -22,6 +22,11 @@
         color: var(--purple-500-main);
     }
 
+    &[data-variant='white'] {
+        color: var(--grey-600);
+        background: transparent;
+    }
+
     &[data-variant='white']:hover {
         color: var(--purple-400);
     }

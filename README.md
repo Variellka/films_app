@@ -1,5 +1,12 @@
-# Mantine Next Template
+# Movie App
 
-Get started with the template by clicking `Use this template` button on the top of the page.
+[movies-app-virid-gamma.vercel.app](movies-app-virid-gamma.vercel.app)
+(if you don't see any movies try to turn on VPN)
 
-[Documentation](https://mantine.dev/guides/next/)
+## tech stack
+
+- Redux Toolkit
+- React.js
+- Next.js
+- Typescript
+- Mantine

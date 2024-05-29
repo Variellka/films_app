@@ -19,26 +19,26 @@ const RatedMoviesSearch = () => {
 
     return (
         <TextInput 
-                h={48}
-                pr={12}
-                value={search}
-                onChange={(event) => setSearch(event.currentTarget.value)}
-                leftSection={icon}
-                placeholder="Search movie title"
-                rightSection={
-                    <Button 
-                        variant='filled' 
-                        h={32} 
-                        w={88}
-                        onClick={onSearch}
-                    >
-                        Search
-                    </Button>
-                }
-                rightSectionWidth={100}
-                styles={{input: {height: '48px', border: 'none'}}}
-                w={isSmallScreen ? '100%' : '50%'}
-            />
+            h={48}
+            pr={12}
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+            leftSection={icon}
+            placeholder="Search movie title"
+            rightSection={
+                <Button 
+                    variant='filled' 
+                    h={32} 
+                    w={88}
+                    onClick={onSearch}
+                >
+                    Search
+                </Button>
+            }
+            rightSectionWidth={100}
+            styles={{input: {height: '48px', border: 'var(--grey-200)'}}}
+            w={isSmallScreen ? '100%' : '50%'}
+        />
     );
 };
 

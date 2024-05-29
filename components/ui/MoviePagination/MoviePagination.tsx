@@ -1,6 +1,13 @@
 import { Group, Pagination } from "@mantine/core";
 
-const MoviePagination = ({totalPages, setPage, page, justify}) => {
+interface MoviePaginationProps {
+    totalPages: number,
+    setPage: (arg: number) => void,
+    page: number,
+    justify: string
+}
+
+const MoviePagination = ({totalPages, setPage, page, justify}: MoviePaginationProps) => {
     return (
         <Group justify={justify} gap={24}>
             <Pagination 

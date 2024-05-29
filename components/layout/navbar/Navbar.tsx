@@ -12,7 +12,11 @@ const theme = createTheme({
     },
   });
 
-const Navbar = ({toggleMobile}) => {
+interface NavbarProps {
+    toggleMobile: () => void
+}
+
+const Navbar = ({toggleMobile}: NavbarProps) => {
     const {pathname} = useRouter();
 
     return (
@@ -34,6 +38,7 @@ const Navbar = ({toggleMobile}) => {
                         variant={pathname === routes.RATED_MOVIES ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
+                        onClick={toggleMobile}
                     >
                         <Text size="md">Rated Movies</Text>
                     </Button>

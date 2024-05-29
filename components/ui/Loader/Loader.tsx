@@ -1,6 +1,10 @@
 import { Box, LoadingOverlay } from "@mantine/core";
 
-const Loader = (isLoading) => {
+interface LoaderProps {
+    isLoading: boolean
+}
+
+const Loader = ({isLoading}: LoaderProps) => {
     return (
         <Box pos="relative">
             <LoadingOverlay 

@@ -2,8 +2,14 @@ import { Grid, Image, Stack, Text } from "@mantine/core";
 import Loader from "../Loader/Loader";
 import MovieCardPreview from "../MovieCardPreview/MovieCardPreview";
 import { useMediaQuery } from "@mantine/hooks";
+import { IMovie } from "../../../utils/types";
 
-const MoviesList = ({movies, isLoading}) => {
+interface MoviesListProps {
+    movies?: IMovie[], 
+    isLoading: boolean
+}
+
+const MoviesList = ({movies, isLoading}: MoviesListProps) => {
     const isSmallScreen = useMediaQuery('(max-width: 1090px)');
 
     if (movies && movies.length) {
