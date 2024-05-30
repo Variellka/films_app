@@ -10,6 +10,8 @@ import { rateModalSliceActions } from "../../../slices/rateModalSlice";
 import { formatVote } from "../../../utils/formatFunctions";
 import { IGenre, IMovie, IMovieRating } from "../../../utils/types";
 import styles from './MovieCardPreview.module.css';
+import { getMoviesIsLoading } from "../../../selectors/getMovies";
+import { Loader } from '@mantine/core';
 
 interface MovieCardPreviewProps {
     movie: IMovie
@@ -30,6 +32,7 @@ const MovieCardPreview = ({movie}: MovieCardPreviewProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const modalState = useSelector(getRateModalState)
     const [rating, setRating] = useState(0)
+    const isLoading = useSelector(getMoviesIsLoading);
 
     useEffect(() => {
         if  (movie?.id && !modalState) {
@@ -43,6 +46,14 @@ const MovieCardPreview = ({movie}: MovieCardPreviewProps) => {
         dispatch(rateModalSliceActions.setMovieData(movie))
         dispatch(rateModalSliceActions.setModal(true))
     }, [dispatch, movie])
+
+    if (isLoading) {
+        return (
+            <Flex justify='space-between' p={isSmallScreen ? 5 : 24} bg="white" style={{ borderRadius: '10px' }}>
+                <Loader color="gray" style={{margin: 'auto'}}/>
+            </Flex>
+        )
+    }
 
     return (
         <Flex justify='space-between' p={isSmallScreen ? 5 : 24} bg="white" style={{ borderRadius: '10px' }}>

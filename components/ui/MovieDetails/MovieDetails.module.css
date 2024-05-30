@@ -8,6 +8,11 @@
     width: min-content;
 }
 
+.Wrapper {
+    background-color: white;
+    border-radius: 12px;
+}
+
 .MovieDetails {
     margin: 0 !important;
   }
@@ -35,6 +40,15 @@
         justify-content: flex-end;
         width: 100%;
     }
+}
+
+.divider::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--grey-300);
+    margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {

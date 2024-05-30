@@ -27,6 +27,7 @@ const MoviesPage = () => {
     const setPage = useCallback((value: number) => {
         dispatch(movieSliceActions.setPage(value))
         dispatch(fetchMovies())
+        window.scrollTo(0, 0)
     }, [dispatch])
 
     return (

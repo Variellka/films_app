@@ -60,7 +60,12 @@ const MovieDetails = () => {
                 { title: 'Movies', href: '/movies' },
                 { title: movie?.title},
             ]}/>
-            <Flex justify='space-between' key='movieDetails' p={isSmallScreen ? 0 : 24}>
+            <Flex 
+                justify='space-between' 
+                key='movieDetails' 
+                p={isSmallScreen ? 0 : 24} 
+                className={styles.Wrapper}
+            >
                 <Flex gap={16} direction={isSmallScreen ? 'column' : 'row'}>
                     <Image 
                         alt={movie?.title} 
@@ -126,49 +131,56 @@ const MovieDetails = () => {
                     {rating ? <Text fw={600} c='black' ml={4}>{rating}</Text> : null}
                 </Button>        
             </Flex>
-            <Stack p={isSmallScreen ? 0 : 24} gap={0}>
-                {movie?.videos?.results?.find((video: IVideo) => video.type === "Trailer")?.key ? 
-                    <>
-                        <Text size="xl" fw={700} mb={16}>Trailer</Text>
-                        <AspectRatio ratio={16 / 9} w={500} mb={41}>
-                            <iframe
-                                // eslint-disable-next-line max-len
-                                src={`https://www.youtube.com/embed/${movie.videos.results.find((video: IVideo) => video.type === "Trailer").key}`}
-                                title="YouTube video player"
-                                style={{ border: 0 }}
-                            />
-                        </AspectRatio>
-                    </>
-                    : null}
-                
-                {movie?.overview ?  
-                    <>
-                        <Text size="xl" fw={700} mb={16}>Description</Text>
-                        <Text size={isSmallScreen ? 'sm' : 'md'} mb={41}>{movie.overview}</Text>
-                    </>
-                    : null}
+            {movie?.videos?.results?.find((video: IVideo) => video.type === "Trailer")?.key ||
+            movie?.overview || movie?.production_companies && movie?.production_companies?.length ?
+                <Stack p={isSmallScreen ? 0 : 24} gap={0} className={styles.Wrapper}>
+                    {movie?.videos?.results?.find((video: IVideo) => video.type === "Trailer")?.key ? 
+                        <>
+                            <Text size="xl" fw={700} mb={16}>Trailer</Text>
+                            <AspectRatio ratio={16 / 9} w={500} mb={41}>
+                                <iframe
+                                    // eslint-disable-next-line max-len
+                                    src={`https://www.youtube.com/embed/${movie.videos.results.find((video: IVideo) => video.type === "Trailer").key}`}
+                                    title="YouTube video player"
+                                    style={{ border: 0 }}
+                                />
+                            </AspectRatio>
+                            {movie?.overview ? <div className={styles.divider}></div> : null}
+                        </>
+                        : null}
+            
+                    {movie?.overview ?  
+                        <>
+                            <Text size="xl" fw={700} mb={16}>Description</Text>
+                            <Text size={isSmallScreen ? 'sm' : 'md'} mb={41}>{movie.overview}</Text>
+                            {movie?.production_companies && movie?.production_companies?.length 
+                                ? <div className={styles.divider}></div> : null}
+                        </>
+                        : null}
 
-                {movie?.production_companies && movie?.production_companies?.length ? 
-                    <>
-                        <Text size="xl" fw={700} mb={16}>Production</Text>
-                        <Stack>
-                            {movie.production_companies?.map(company => (
-                                <Flex key={company.id} align='center'>
-                                    {company?.logo_path ? <Image 
-                                        src={`https://image.tmdb.org/t/p/w500/${company?.logo_path}`} 
-                                        w={40}
-                                        h={40}
-                                        alt="logo"
-                                        mr={9}
-                                        fit="contain"
-                                    /> : null}
-                                    <Text fw={700}>{company.name}</Text>
-                                </Flex>
-                            ))}
-                        </Stack>
-                    </>
-                    : null}
-            </Stack>
+                    {movie?.production_companies && movie?.production_companies?.length ? 
+                        <>
+                            <Text size="xl" fw={700} mb={16}>Production</Text>
+                            <Stack>
+                                {movie.production_companies?.map(company => (
+                                    <Flex key={company.id} align='center'>
+                                        {company?.logo_path ? <Image 
+                                            src={`https://image.tmdb.org/t/p/w500/${company?.logo_path}`} 
+                                            w={40}
+                                            h={40}
+                                            alt="logo"
+                                            mr={9}
+                                            fit="contain"
+                                        /> : null}
+                                        <Text fw={700}>{company.name}</Text>
+                                    </Flex>
+                                ))}
+                            </Stack>
+                        </>
+                        : null}
+                </Stack>
+                : null
+            }
         </Stack>
     );
 };
