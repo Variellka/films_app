@@ -5,11 +5,16 @@ import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../app_/store";
 import { getGenresData } from "../../../selectors/getGenres";
-import { getMoviesGenres, getMoviesRatingHighest, getMoviesRatingLowest, getMoviesReleaseYear } from "../../../selectors/getMovies";
+import {
+    getMoviesGenres,
+    getMoviesRatingHighest,
+    getMoviesRatingLowest,
+    getMoviesReleaseYear
+} from "../../../selectors/getMovies";
 import { fetchMovies } from "../../../services/fetchMovies";
 import { movieSliceActions } from "../../../slices/movieSlice";
 
-const getYears = (startYear, endYear, fn = i => i) => {
+const getYears = (startYear: number, endYear: number, fn = (i: number) => i) => {
     const length = endYear - startYear + 1;
     return Array.from({ length }, (_, i) => fn(startYear + i)).map(String);
 };
@@ -17,7 +22,7 @@ const getYears = (startYear, endYear, fn = i => i) => {
 const MovieFilters = () => {
     const dispatch = useDispatch<AppDispatch>()
     const genres = useSelector(getGenresData);
-    const genresNames = genres && Array.isArray(genres) && genres?.map(item => item.name)
+    const genresNames = genres && Array.isArray(genres) ? genres?.map(item => item.name) : undefined;
     const currentGenres = useSelector(getMoviesGenres);
     const releaseDate = useSelector(getMoviesReleaseYear)
     const ratingLowest = useSelector(getMoviesRatingLowest);
@@ -26,24 +31,24 @@ const MovieFilters = () => {
     const [dropdownStates, setDropdownStates] = useState({
         genreSelect: false,
         yearSelect: false,
-      });
+    });
    
-      const handleDropdownOpen = (key) => {
+    const handleDropdownOpen = (key: string) => {
         setDropdownStates((prevState) => ({ ...prevState, [key]: true }));
-      };
+    };
     
-      const handleDropdownClose = (key) => {
+    const handleDropdownClose = (key: string) => {
         setDropdownStates((prevState) => ({ ...prevState, [key]: false }));
-      };
+    };
 
     const fetchData = useCallback(() => {
         dispatch(movieSliceActions.setPage(1));
         dispatch(fetchMovies());
     }, [dispatch]);
 
-    const setGenre = useCallback((selectedGenres) => {
-        const lookup = genres.reduce((acc, item) => {
-        acc[item.name] = item.id;
+    const setGenre = useCallback((selectedGenres: string[]) => {
+        const lookup = genres.reduce((acc: any, item) => {
+            acc[item.name] = item.id;
             return acc;
         }, {});
 
@@ -55,17 +60,17 @@ const MovieFilters = () => {
         fetchData()
     }, [dispatch, fetchData, genres])
 
-    const setReleaseYear = useCallback((value) => {
+    const setReleaseYear = useCallback((value: string | null) => {
         dispatch(movieSliceActions.setReleaseYear(value))
         fetchData()
     }, [dispatch, fetchData])
 
-    const setRatingLowest = useCallback((value) => {
+    const setRatingLowest = useCallback((value: string | null) => {
         dispatch(movieSliceActions.setRatingLowest(value))
         fetchData()
     }, [dispatch, fetchData])
 
-    const setRatingHighest = useCallback((value) => {
+    const setRatingHighest = useCallback((value: string | null) => {
         dispatch(movieSliceActions.setRatingHighest(value))
         fetchData()
     }, [dispatch, fetchData])

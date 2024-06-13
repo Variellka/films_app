@@ -6,13 +6,17 @@ import { routes } from "../../../app_/routes";
 
 const theme = createTheme({
     components: {
-      Button: Button.extend({
-        classNames: styles,
-      })
+        Button: Button.extend({
+            classNames: styles,
+        })
     },
-  });
+});
 
-const Navbar = ({toggleMobile}) => {
+interface NavbarProps {
+    toggleMobile: () => void
+}
+
+const Navbar = ({toggleMobile}: NavbarProps) => {
     const {pathname} = useRouter();
 
     return (
@@ -34,6 +38,7 @@ const Navbar = ({toggleMobile}) => {
                         variant={pathname === routes.RATED_MOVIES ? 'active' : 'subtle'} 
                         fullWidth 
                         justify="start"
+                        onClick={toggleMobile}
                     >
                         <Text size="md">Rated Movies</Text>
                     </Button>

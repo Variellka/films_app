@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { rateModalSliceActions } from '../../../slices/rateModalSlice';
 import { deleteMovieRating, updateMovieRating } from '../../../utils/changeMovieRating';
 import { useMediaQuery } from '@mantine/hooks';
+import { IMovieRating } from '../../../utils/types';
 
 const RateMovieModal = () => {
     const rateModalState = useSelector(getRateModalState);
@@ -16,27 +17,31 @@ const RateMovieModal = () => {
 
     useEffect(() => {
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
-        const movieSavedRating = moviesRating?.find((item) => item.id === movie?.id)?.rating || 0
+        const movieSavedRating = moviesRating?.find((item: IMovieRating) => item.id === movie?.id)?.rating || 0
         setRating(Number(movieSavedRating))
-      }, [movie?.id, rateModalState]);
+    }, [movie?.id, rateModalState]);
 
     const onClose = useCallback(() => {
         dispatch(rateModalSliceActions.setModal(false))
         setRating(0)
     }, [dispatch])
 
-    const onRateMovie = useCallback((value) => {
+    const onRateMovie = useCallback((value: number) => {
         setRating(value)
     }, [])
 
     const onSaveRating = useCallback(() => {
-        rating !== 0 ? updateMovieRating(movie?.id, rating) : deleteMovieRating(movie.id);
+        if (movie?.id) {
+            rating !== 0 ? updateMovieRating(movie.id, rating) : deleteMovieRating(movie.id);
+        }
         dispatch(rateModalSliceActions.setModal(false))
         setRating(0)
     }, [dispatch, movie, rating])
 
     const onCancelRating = useCallback(() => {
-        deleteMovieRating(movie.id)
+        if (movie?.id) {
+            deleteMovieRating(movie.id)
+        }
         dispatch(rateModalSliceActions.setModal(false))
         setRating(0)
     }, [dispatch, movie?.id])

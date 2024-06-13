@@ -9,10 +9,19 @@ import MoviePagination from '../../components/ui/MoviePagination/MoviePagination
 import RatedMoviesSearch from '../../components/ui/RatedMoviesSearch/RatedMoviesSearch';
 import MoviesList from '../../components/ui/MoviesList/MoviesList';
 import { getRateModalState } from '../../selectors/getRateModal';
-import { getRatedMoviesData, getRatedMoviesFiltered, getRatedMoviesIds, getRatedMoviesIsLoading, getRatedMoviesPageNum, getRatedMoviesSearch, getRatedMoviesTotalPages } from '../../selectors/getRatedMovies';
+import { 
+    getRatedMoviesData, 
+    getRatedMoviesFiltered, 
+    getRatedMoviesIds, 
+    getRatedMoviesIsLoading, 
+    getRatedMoviesPageNum, 
+    getRatedMoviesSearch, 
+    getRatedMoviesTotalPages 
+} from '../../selectors/getRatedMovies';
 import { fetchRatedMovies } from '../../services/fetchRatedMovies';
 import { ratedMoviesSliceActions } from '../../slices/ratedMoviesSlice';
 import { useMediaQuery } from '@mantine/hooks';
+import { IMovieRating } from '../../utils/types';
 
 const RatedMoviesPage = () => {
     const isSmallScreen = useMediaQuery('(max-width: 1090px)');
@@ -29,31 +38,31 @@ const RatedMoviesPage = () => {
 
     useEffect(() => {
         const moviesRating = JSON.parse(localStorage.getItem("moviesRating") || '[]');
-        const movieIds = moviesRating.map(movie => movie.id);
+        const movieIds = moviesRating.map((movie: IMovieRating) => movie.id);
 
-        if (movieIds?.toString() !== ids?.toString() || !ratedMovies) {
+        if (movieIds.toString() !== ids.toString() || !ratedMovies) {
             dispatch(ratedMoviesSliceActions.setIds(movieIds))
             dispatch(fetchRatedMovies(movieIds))
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, modalState])
 
-    const setPage = useCallback((value) => {
+    const setPage = useCallback((value: number) => {
         dispatch(ratedMoviesSliceActions.setPage(value))
-      }, [dispatch])
+    }, [dispatch])
 
     if (!ratedMovies?.length && !isLoading) {
         return (
             <Layout>
                 <Stack justify='center' align='center' gap='16'>
-                <Image alt='no rated movies' src='/noRatedMovies.svg' w='311'/>
-                <Text size="md" fw={500}>You haven&apos;t rated any films yet</Text>
-                <Link href={routes.MOVIES}>
-                    <Button variant='filled'>
-                        <Text size="sm" fw={500}>Find movies</Text>
-                    </Button>
-                </Link>    
-            </Stack>
+                    <Image alt='no rated movies' src='/noRatedMovies.svg' w='311'/>
+                    <Text size="md" fw={500}>You haven&apos;t rated any films yet</Text>
+                    <Link href={routes.MOVIES}>
+                        <Button variant='filled'>
+                            <Text size="sm" fw={500}>Find movies</Text>
+                        </Button>
+                    </Link>    
+                </Stack>
             </Layout>
             
         )
@@ -70,13 +79,13 @@ const RatedMoviesPage = () => {
                 isLoading={isLoading}
             />
             {moviesToRender && moviesToRender.length > 4 ?
-              <MoviePagination 
-                totalPages={totalPageNum} 
-                setPage={setPage} 
-                page={page} 
-                justify={'center'}
-              /> 
-            : null}
+                <MoviePagination 
+                    totalPages={totalPageNum} 
+                    setPage={setPage} 
+                    page={page} 
+                    justify={'center'}
+                /> 
+                : null}
         </Layout>
     );
 };

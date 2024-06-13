@@ -18,7 +18,7 @@ const Layout:FC<PropsWithChildren> = ({children}) => {
             withBorder={false}
         >
             <AppShell.Header w={20}>
-            <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="md" size="sm" />
+                <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="md" size="sm" />
             </AppShell.Header>
             <AppShell.Navbar p={24} >
                 <Navbar toggleMobile={toggleMobile}/>
@@ -29,7 +29,7 @@ const Layout:FC<PropsWithChildren> = ({children}) => {
                     {children}
                 </div>
             </AppShell.Main>
-         </AppShell>
+        </AppShell>
     );
 };
 

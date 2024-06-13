@@ -1,6 +1,6 @@
 import { Button, TextInput, rem } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app_/store';
 import { ratedMoviesSliceActions } from '../../../slices/ratedMoviesSlice';
@@ -12,6 +12,11 @@ const RatedMoviesSearch = () => {
     const dispatch = useDispatch<AppDispatch>()
     const isSmallScreen = useMediaQuery('(max-width: 1090px)');
 
+    useEffect(() => {
+        dispatch(ratedMoviesSliceActions.setSearch(''));
+        dispatch(ratedMoviesSliceActions.setPage(1))
+    }, [dispatch])
+
     const onSearch = useCallback(() => {
         dispatch(ratedMoviesSliceActions.setSearch(search));
         dispatch(ratedMoviesSliceActions.setPage(1))
@@ -19,26 +24,26 @@ const RatedMoviesSearch = () => {
 
     return (
         <TextInput 
-                h={48}
-                pr={12}
-                value={search}
-                onChange={(event) => setSearch(event.currentTarget.value)}
-                leftSection={icon}
-                placeholder="Search movie title"
-                rightSection={
-                    <Button 
-                        variant='filled' 
-                        h={32} 
-                        w={88}
-                        onClick={onSearch}
-                    >
-                        Search
-                    </Button>
-                }
-                rightSectionWidth={100}
-                styles={{input: {height: '48px', border: 'none'}}}
-                w={isSmallScreen ? '100%' : '50%'}
-            />
+            h={48}
+            pr={12}
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+            leftSection={icon}
+            placeholder="Search movie title"
+            rightSection={
+                <Button 
+                    variant='filled' 
+                    h={32} 
+                    w={88}
+                    onClick={onSearch}
+                >
+                    Search
+                </Button>
+            }
+            rightSectionWidth={100}
+            styles={{input: {height: '48px', border: 'var(--grey-200)'}}}
+            w={isSmallScreen ? '100%' : '50%'}
+        />
     );
 };
 

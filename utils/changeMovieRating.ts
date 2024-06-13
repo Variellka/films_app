@@ -1,4 +1,4 @@
-export function updateMovieRating(id, rating) {
+export function updateMovieRating(id: number, rating: number) {
     const key = "moviesRating";
     const moviesRating = JSON.parse(localStorage.getItem(key) || '[]');
     const movieIndex = Array.isArray(moviesRating) ? moviesRating.findIndex(movie => movie.id === id) : -1;
@@ -12,7 +12,7 @@ export function updateMovieRating(id, rating) {
     localStorage.setItem(key, JSON.stringify(moviesRating));
 }
 
-export function deleteMovieRating(id) {
+export function deleteMovieRating(id: number) {
     const key = "moviesRating";
     let moviesRating = JSON.parse(localStorage.getItem(key) || '[]');
     moviesRating = Array.isArray(moviesRating) && moviesRating.filter(movie => movie.id !== id);

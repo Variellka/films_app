@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { movieSliceReducer } from '../slices/movieSlice'
-import { genreSliceReducer } from '../slices/genreSlice';
-import { movieDetailsSliceReducer } from '../slices/movieDetailsSlice';
-import { rateModalSliceReducer } from '../slices/rateModalSlice';
-import { ratedMoviesSliceReducer } from '../slices/ratedMoviesSlice';
+import { MoviesPageSchema, movieSliceReducer } from '../slices/movieSlice'
+import { GenresSchema, genreSliceReducer } from '../slices/genreSlice';
+import { MovieDetailsSchema, movieDetailsSliceReducer } from '../slices/movieDetailsSlice';
+import { RateModalSchema, rateModalSliceReducer } from '../slices/rateModalSlice';
+import { RatedMoviesPageSchema, ratedMoviesSliceReducer } from '../slices/ratedMoviesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +14,17 @@ export const store = configureStore({
         ratedMovies: ratedMoviesSliceReducer
     }, 
 })
+
+export interface StateSchema {
+    movies: MoviesPageSchema,
+    genres: GenresSchema,
+    movieDetails: MovieDetailsSchema,
+    rateModal: RateModalSchema,
+    ratedMovies: RatedMoviesPageSchema
+}
+
+export interface ThunkConfig {
+    state: StateSchema
+}
 
 export type AppDispatch = typeof store.dispatch;

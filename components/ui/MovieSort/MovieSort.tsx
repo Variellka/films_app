@@ -7,7 +7,12 @@ import { movieSliceActions } from "../../../slices/movieSlice";
 import { fetchMovies } from "../../../services/fetchMovies";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
-const movieSortOptions = [
+interface IMovieSortOption {
+    name: string,
+    value: string
+}
+
+const movieSortOptions: IMovieSortOption[] = [
     {
         name: 'Most popular',
         value: 'popularity.desc'
@@ -44,7 +49,7 @@ const MovieSort = () => {
         dispatch(fetchMovies());
     }, [dispatch]);
 
-    const setSortOption = useCallback((value) => {
+    const setSortOption = useCallback((value : string  | null) => {
         const newOption = movieSortOptions.find(option => option.name === value)
         dispatch(movieSliceActions.setSort(newOption));
         fetchData();
